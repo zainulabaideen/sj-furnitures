@@ -8,6 +8,7 @@ import Footer from './component/layout/Footer/Footer.jsx';
 import Home from './component/Home/Home.jsx';
 
 
+
 // React.useEffect(() => {
 //   WebFont.load({
 //     google:{
