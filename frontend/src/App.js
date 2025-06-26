@@ -16,19 +16,29 @@ import LoginSignup from "./component/LoginSignup/LoginSignup.jsx";
 // })
 
 function App() {
-  return (
-    <div className=" bg-bg-clr">
+    return ( <
+        div className = " bg-bg-clr" >
 
-      <Header />
-      <Routes>
-        <Route exact path="/" Component={LoginSignup} />{" "}
+        <
+        Header / >
+        <
+        Routes >
 
-        <Route exact path="/" Component={Home} />{" "}
+        <
+        Route exact path = "/"
+        Component = { Home }
+        />{" "} <
+        Route exact path = "/"
+        Component = { LoginSignup }
+        />{" "}
 
-      </Routes>{" "}
-      <Footer />
-    </div>
-  );
+
+        <
+        /Routes>{" "} <
+        Footer / >
+        <
+        /div>
+    );
 }
 
 export default App;

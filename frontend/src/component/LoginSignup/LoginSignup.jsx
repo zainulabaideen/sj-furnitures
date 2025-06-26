@@ -11,10 +11,10 @@ const LoginSignup = () => {
   const [isPasswordFieldActive, setIsPasswordFieldActive] = useState(false);
 
   return (
-    <div className="relative lg:w-[900px] mx-5 h-[550px] lg:mx-auto overflow-hidden shadow-lg rounded-xl">
+    <div className=" text-primaryTextClr relative lg:w-[900px] mx-5 h-[550px] lg:mx-auto overflow-hidden shadow-lg rounded-xl">
       {/* Green Panel (40% width) */}
       <div
-        className={`md:block hidden absolute top-0 h-full w-[40%] bg-loginSlidingPortion text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${
+        className={`md:block hidden absolute top-0 h-full w-[40%] bg-secondaryBgClr text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${
           isSignUp ? "translate-x-0" : "translate-x-[150%]"
         }`}
       >
@@ -65,10 +65,10 @@ const LoginSignup = () => {
         }`}
       >
         <div className="w-full max-w-md space-y-5">
-          <h2 className="text-3xl text-forgotPasswordTextClr font-bold mb-4">
+          <h2 className="text-3xl text-secondaryTextClr font-bold mb-4">
             {isSignUp ? "Create Account" : "Login"}
           </h2>
-          <p className="mb-6 text-gray-600">
+          <p className="mb-6">
             {isSignUp
               ? "Join us by filling out the information below"
               : "Sign in to your account"}
@@ -80,10 +80,10 @@ const LoginSignup = () => {
             <div className=" space-y-10 flex items-center flex-col">
               {/*  User's profile picture field*/}
 
-              <div className="upload-area  rounded-full">
+              <div className="upload-area rounded-full cursor-pointer">
                 <label htmlFor="file-input">
                   <img
-                    className=" h-20 w-20 rounded-full"
+                    className=" h-20 w-20 rounded-full cursor-pointer" title="Change picture"
                     src={avatar}
                     alt=""
                   />
@@ -93,6 +93,7 @@ const LoginSignup = () => {
                   type="file"
                   name="avatar"
                   id="file-input"
+title="Upload profile picture"
                   hidden
                 />
               </div>
@@ -157,7 +158,7 @@ const LoginSignup = () => {
             <div className="mt-4 ">
               <a
                 href="#"
-                className=" text-forgotPasswordTextClr text-sm hover:underline"
+                className=" text-secondaryTextClr text-sm hover:underline"
               >
                 Forgot your password?
               </a>
@@ -166,7 +167,7 @@ const LoginSignup = () => {
 
           <button
             type="button"
-            className=" hover:bg-opacity-90 w-1/3 bg-loginSlidingPortion text-white py-3 rounded-full font-semibold"
+            className=" hover:bg-opacity-90 w-1/3 bg-secondaryBgClr text-white py-3 rounded-full font-semibold"
           >
             {isSignUp ? "SignUp" : "Login"}
           </button>
@@ -178,7 +179,7 @@ const LoginSignup = () => {
               {isSignUp ? "Already have an account" : "Do not have an account"}{" "}
               <span
                 onClick={() => setIsSignUp(!isSignUp)}
-                className=" cursor-pointer text-forgotPasswordTextClr hover:underline"
+                className=" cursor-pointer text-secondaryTextClr hover:underline"
               >
                 {isSignUp ? "Login" : "Create Now"}
               </span>

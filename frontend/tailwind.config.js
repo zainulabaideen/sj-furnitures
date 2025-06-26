@@ -8,13 +8,13 @@ module.exports = {
         extend: {
             textColor: {
 
-                'TextClr': '#b4b2b2',
+                'primaryTextClr': '#b4b2b2',
                 'hClr': '#302f2f',
-                'forgotPasswordTextClr': '#3AB19B',
+                'secondaryTextClr': '#3AB19B',
             },
             backgroundColor: {
-                'bg-clr': 'white',
-                'loginSlidingPortion': '#3AB19B',
+                'primaryBg-clr': 'white',
+                'secondaryBgClr': '#3AB19B',
             },
         },
     },
