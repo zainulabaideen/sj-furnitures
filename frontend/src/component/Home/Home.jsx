@@ -1,8 +1,11 @@
 import React from 'react'
+import MainProduct from '../Product/MainProduct'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div className='md:px-20 px-3'>
+      <MainProduct/>
+    </div>
   )
 }
 
