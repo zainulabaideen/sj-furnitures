@@ -7,6 +7,7 @@ import Footer from "./component/layout/Footer/Footer.js";
 import Home from "./component/Home/Home.jsx";
 import LoginSignup from "./component/LoginSignup/LoginSignup.jsx";
 
+
 // React.useEffect(() => {
 //   WebFont.load({
 //     google:{
