@@ -14,9 +14,9 @@ const LoginSignup = () => {
     <div className=" text-primaryTextClr relative lg:w-[900px] mx-5 h-[550px] lg:mx-auto overflow-hidden shadow-lg rounded-xl">
       {/* Green Panel (40% width) */}
       <div
-        className={`md:block hidden absolute top-0 h-full w-[40%] bg-secondaryBgClr text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${
+        className={`md:block hidden absolute top-0 h-full w-[40%] bg bg-primary text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${
           isSignUp ? "translate-x-0" : "translate-x-[150%]"
-        }`}
+        }`} 
       >
         {/* Content Container */}
         <div className="relative w-full h-full overflow-hidden">
@@ -184,7 +184,7 @@ title="Upload profile picture"
                 {isSignUp ? "Login" : "Create Now"}
               </span>
             </h1>
-          </div>
+          </div>  
         </div>
       </form>
     </div>

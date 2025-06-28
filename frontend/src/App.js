@@ -1,45 +1,31 @@
-import { BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./component/layout/Header/Header.js";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import WebFont from "webfontloader";
 import Footer from "./component/layout/Footer/Footer.js";
 import Home from "./component/Home/Home.jsx";
 import LoginSignup from "./component/LoginSignup/LoginSignup.jsx";
-
-
-// React.useEffect(() => {
-//   WebFont.load({
-//     google:{
-//       famillies:["Roboto" , ""]
-//     }
-//   })
-// })
+import WebFont from "webfontloader";
+import { useEffect } from "react";
 
 function App() {
-    return ( <
-        div className = " bg-bg-clr" >
+//   useEffect(() => {
+// //     WebFont.load({
+// //       google: {
+// //         families: ["Roboto"],
+// //       },
+// //     });
+// //   }, []);
 
-        <
-        Header / >
-        <
-        Routes >
-
-        <
-        Route exact path = "/"
-        Component = { Home }
-        />{" "} <
-        Route exact path = "/"
-        Component = { LoginSignup }
-        />{" "}
-
-
-        <
-        /Routes>{" "} <
-        Footer / >
-        <
-        /div>
-    );
+  return (
+    <div className="bg-bg-clr">
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginSignup />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

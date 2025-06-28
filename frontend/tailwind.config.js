@@ -12,6 +12,10 @@ module.exports = {
                 'hClr': '#302f2f',
                 'secondaryTextClr': '#3AB19B',
             },
+             colors:{
+      primary: " #663200",
+    secondary: "#ff8901",
+            },
             backgroundColor: {
                 'primaryBg-clr': 'white',
                 'secondaryBgClr': '#3AB19B',
