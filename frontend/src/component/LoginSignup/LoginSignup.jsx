@@ -14,7 +14,7 @@ const LoginSignup = () => {
     <div className=" text-primaryTextClr relative lg:w-[900px] mx-5 h-[550px] lg:mx-auto overflow-hidden shadow-lg rounded-xl">
       {/* Green Panel (40% width) */}
       <div
-        className={`md:block hidden absolute top-0 h-full w-[40%] bg bg-primary text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${
+        className={`md:block hidden absolute top-0 h-full w-[40%] bg-primary text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${
           isSignUp ? "translate-x-0" : "translate-x-[150%]"
         }`} 
       >
@@ -65,7 +65,7 @@ const LoginSignup = () => {
         }`}
       >
         <div className="w-full max-w-md space-y-5">
-          <h2 className="text-3xl text-secondaryTextClr font-bold mb-4">
+          <h2 className="text-3xl text-secondary font-bold mb-4">
             {isSignUp ? "Create Account" : "Login"}
           </h2>
           <p className="mb-6">
@@ -118,7 +118,7 @@ title="Upload profile picture"
             </div>
           )}
 
-          {/*   Emil field     */}
+          {/*   Email field     */}
 
           <div className="relative flex items-center">
             {!isEmailFieldActive && (
@@ -158,7 +158,7 @@ title="Upload profile picture"
             <div className="mt-4 ">
               <a
                 href="#"
-                className=" text-secondaryTextClr text-sm hover:underline"
+                className=" text-secondary text-sm hover:underline"
               >
                 Forgot your password?
               </a>
@@ -167,7 +167,7 @@ title="Upload profile picture"
 
           <button
             type="button"
-            className=" hover:bg-opacity-90 w-1/3 bg-secondaryBgClr text-white py-3 rounded-full font-semibold"
+            className=" hover:bg-opacity-85 w-1/3 bg-secondary text-white py-3 rounded-full font-semibold"
           >
             {isSignUp ? "SignUp" : "Login"}
           </button>
