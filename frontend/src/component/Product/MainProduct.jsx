@@ -1,7 +1,13 @@
-import React from "react";
+import React, { Fragment , useEffect } from "react";
 import Products from "./Products";
 
+
 const MainProduct = () => {
+
+    
+
+
+
   const buttonsCategoryData = [
     { title: "All Products", link: "#" },
     { title: "Latest Products", link: "#" },
@@ -10,7 +16,8 @@ const MainProduct = () => {
   ];
 
   return (
-    <div className=" pt-10 text-center space-y-10 text-gray-800">
+
+ <div className=" pt-10 text-center space-y-10 text-gray-800">
       <h2 className="text-xl md:text-2xl font-semibold">Our Products</h2>
       <h1 className="text-3xl md:text-5xl font-semibold">
         Our <span className="text-secondaryTextClr">Products Collections</span>
@@ -27,9 +34,10 @@ const MainProduct = () => {
         ))}
       </div>
 
-<Products/>
+   <Products/>
 
     </div>
+ 
   );
 };
 

@@ -13,7 +13,7 @@ const { applyTimestamps } = require('./models/userModel');
 const user = require("./routes/userRoute");
 const order = require("./routes/orderroute");
 app.use("/api", product)
-app.use("/api",user)
+app.use("/api",user) 
 app.use("/api", order)
 app.use(errorMiddleware);
 

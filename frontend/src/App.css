@@ -16,3 +16,7 @@ body {
     color: #b4b2b2;
 }
 
+:root {
+  --primary: #663200;
+  --secondary: #ff8901;
+}

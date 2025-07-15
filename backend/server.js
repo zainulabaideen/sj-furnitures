@@ -20,7 +20,7 @@ process.on("uncaughtException" , (err) => {
 dotenv.config({path:"backend/config/.env"});
  //db connection
 
- connectDatabase();
+ connectDatabase(); 
 
    
 const server= app.listen(process.env.PORT,()=>(

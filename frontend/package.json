@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.10.16",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -11,6 +13,7 @@
     "axios": "^1.10.0",
     "overlay-navbar": "^1.2.3",
     "react": "^19.1.0",
+    "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
     "react-dom": "^19.1.0",
     "react-helmet": "^6.1.0",
@@ -20,6 +23,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^11.0.5",
     "redux": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^3.1.0",
@@ -54,5 +58,6 @@
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

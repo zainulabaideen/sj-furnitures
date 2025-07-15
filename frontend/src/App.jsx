@@ -7,22 +7,24 @@ import About from "./component/About/About.jsx";
 import LoginSignup from "./component/LoginSignup/LoginSignup.jsx";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
+import Loader from "./component/layout/loader/Loader.js";
 
 function App() {
   //   useEffect(() => {
   // //     WebFont.load({
-  // //       google: {
+  // //       google: {  
   // //         families: ["Roboto"],
   // //       },
   // //     });
   // //   }, []);
-
+  
   return (
     <div className="bg-bg-clr">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />{" "}
         <Route path="/about" element={<About />} />{" "}
+         {/* <Route path="/loading" element={<Loader/>} />{" "} */}
 
       </Routes>{" "}
       <Footer />

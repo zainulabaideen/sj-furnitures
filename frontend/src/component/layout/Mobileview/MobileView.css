@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.mobileview{
+    height: 100%;
+    width: 100%;
+    background: white;
+    padding: 15px;
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(100%); 
+    animation: slideMenuPopUp 0.5s ease forwards;
+}
+
+.top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.logo{
+    font-size: 25px;
+    font-weight:700;
+    color: white;
+    font-family: 'Permanent Marker' , sans-serif;
+
+}
+.logo>img{
+ height: 50px;
+ width: auto;
+
+}
+.cross{
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--primary);
+}
+.cross:hover{
+  color: var(--secondary) ;
+}
+.middle{
+    margin-top: 5rem;
+    
+}
+.line{
+  width: 200px;
+  height: 2px;
+  color: var(--purple-color) ;
+ 
+}
+.mobilemenu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    list-style: none;
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--primary);
+}
+.mobilemenu>li{
+  transform: translateX(100%); 
+  animation: slideLiPopUp 2s ease forwards;
+}
+
+.mobilemenu>li:hover{
+  color: var(--secondary);
+  cursor: pointer;
+
+}
+
+
+@keyframes slideMenuPopUp {
+    0% {
+      transform: translateX(-100%);
+    }
+  
+    100% {
+      transform: translateX(-0%);
+    }
+  }
+
+  @keyframes slideLiPopUp {
+    0% {
+      transform: translateX(-100%);
+    }
+  
+    100% {
+      transform: translateX(-0%);
+    }
+  }
