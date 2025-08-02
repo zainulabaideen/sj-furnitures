@@ -1,11 +1,20 @@
-import React, { Fragment , useEffect } from "react";
+import React, { Fragment , useEffect , useState} from "react";
 import Products from "./Products";
+import { useSelector, useDispatch } from "react-redux";
+import Pagination from "react-js-pagination";
+
+
 
 
 const MainProduct = () => {
+  const [currentPage , setCurrentPage] = useState(1)
+  const { loading, error, products, productsCount , resultPerPage } = useSelector((state) => state.products);
 
+  const setCurrentPageNo = (e) => {
+ setCurrentPage(e)
+  }
     
-
+ 
 
 
   const buttonsCategoryData = [
@@ -14,6 +23,9 @@ const MainProduct = () => {
     { title: "Best Sellers", link: "#" },
     { title: "Featured Products", link: "#" },
   ];
+  console.log("productsCount:", productsCount);
+console.log("resultPerPage:", resultPerPage);
+
 
   return (
 
@@ -34,8 +46,26 @@ const MainProduct = () => {
         ))}
       </div>
 
-   <Products/>
+   <Products  currentPage={currentPage}/>
 
+    {resultPerPage < productsCount && (
+       <div className="paginationBox">
+            <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={resultPerPage}
+              totalItemsCount={productsCount}
+              onChange={setCurrentPageNo}
+              nextPageText="Next"
+              prevPageText="Prev"
+              firstPageText="1st"
+              lastPageText="Last"
+              itemClass="page-item"
+              linkClass="page-link"
+              activeClass="pageItemActive"
+              activeLinkClass="pageLinkActive"
+            />
+         </div>
+    )}
     </div>
  
   );

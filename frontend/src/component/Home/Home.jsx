@@ -9,13 +9,12 @@ import {getProduct} from "../../actions/productAction";
 const Home = () => {  
 
 
+
   return (  
     <>  
   
      <div className='md:px-20 px-3 mt-20'>
-      {/* <Hero/> */}
       <MainProduct/>
-      <LoginSignUp/>
     </div>
   
 

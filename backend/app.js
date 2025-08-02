@@ -1,9 +1,16 @@
 const express = require('express');
 const cookieParese = require("cookie-parser")
+const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload")
 const app = express();
 app.use(express.json());
 app.use(cookieParese());
 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: "/tmp/"
+}));
 const errorMiddleware = require("./middleware/error")
 
 //route imports

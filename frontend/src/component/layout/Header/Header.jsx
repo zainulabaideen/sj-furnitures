@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 import Hero from "../hero/Hero";
 import Mobileview from "../Mobileview/Mobileview";
 
@@ -36,7 +36,7 @@ const Header = () => {
   const links = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
-    { path: "/product", label: "Product" },
+    { path: "/products", label: "Product" },
   ];
 
   return (
@@ -49,9 +49,8 @@ const Header = () => {
         )}
 
         <div
-          className={`top-0 z-50 w-full fixed transition-all duration-300 ${
-            shadow || !isHome ? "bg-white shadow-lg" : "bg-transparent"
-          }`}
+          className={`top-0 z-50 w-full fixed transition-all duration-300 ${shadow || !isHome ? "bg-white shadow-lg" : "bg-transparent"
+            }`}
         >
           <nav className="h-18 py-2 px-3 md:px-20 flex items-center justify-between text-gray-800">
             {/* Mobile Menu Icon */}
@@ -75,10 +74,9 @@ const Header = () => {
                   <NavLink
                     to={path}
                     className={({ isActive }) =>
-                      `block cursor-pointer font-semibold border-b-2 py-2 duration-300 hover:text-secondary ${
-                        isActive
-                          ? "text-secondary border-secondary"
-                          : "border-transparent"
+                      `block cursor-pointer font-semibold border-b-2 py-2 duration-300 hover:text-secondary ${isActive
+                        ? "text-secondary border-secondary"
+                        : "border-transparent"
                       }`
                     }
                   >
@@ -90,10 +88,18 @@ const Header = () => {
 
             {/* Navbar Icons */}
             <div className="font-bold flex md:gap-5 gap-2">
-              <FiSearch className="cursor-pointer text-xl" />
-              <HiOutlineShoppingBag className="cursor-pointer text-xl" />
-              <FaRegUser className="cursor-pointer text-xl" />
+              <Link to="/search">
+                <FiSearch className="cursor-pointer text-xl" />
+              </Link>
+         
+              <Link to="/cart">
+                <HiOutlineShoppingBag className="cursor-pointer text-xl" />
+              </Link>
+              <Link to="/login">
+                <FaRegUser className="cursor-pointer text-xl" />
+              </Link> 
             </div>
+
           </nav>
 
           {/* Mobile View Sidebar */}

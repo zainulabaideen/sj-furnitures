@@ -5,25 +5,72 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js")
 const crypto = require("crypto");
 const { trusted } = require("mongoose");
+const  cloudinary = require("cloudinary")
 
 
 //register a user
 
+// exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+//   // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
+//   //   folder : "avatars",
+//   //   width: 150 ,
+//   //   crop:"scale",
+//   // })
+//    const file = req.files.avatar;
+
+//   const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+//     folder: "avatars",
+//     width: 150,
+//     crop: "scale",
+//   });
+//   const { name, email, password } = req.body;
+
+//   const user = await User.create({
+//     name,
+//     email,
+//     password,
+//     avatar: {
+//       public_ID: myCloud.public_id,
+//       url: myCloud.secure_url
+//     }
+//   });
+
+//   sendToken( user,201,res);
+// });
+
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
+
+  let avatarData = {
+    public_ID: null,
+    url: null,
+  };
+
+  if (req.files && req.files.avatar) {
+    const file = req.files.avatar;
+
+    const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    avatarData = {
+      public_ID: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
 
   const user = await User.create({
     name,
     email,
     password,
-    avatar: {
-      public_ID: "this is sample id",
-      url: " sampleavatarurl"
-    }
+    avatar: avatarData,
   });
 
-  sendToken( user,201,res);
+  sendToken(user, 201, res);
 });
+
 
 
 

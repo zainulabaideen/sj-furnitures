@@ -1,27 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "../../actions/productAction";
+import { getProduct, clearErrors } from "../../actions/productAction";
 import Loader from "../../component/layout/loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import p1_img from "../../assets/p1_img.jpg";
 import p2_img from "../../assets/p2_img.jpg";
 import p3_img from "../../assets/p3_img.jpg";
 import p4_img from "../../assets/p4_img.jpg";
 
-const Products = () => {
+
+const Products = ({ currentPage }) => {
   const dispatch = useDispatch();
-  const { loading, error, products, productsCount } = useSelector((state) => state.products);
+
+
+
+  const { loading, error, products, productsCount,  } = useSelector((state) => state.products);
+  // console.log("Redux state products:", products);
+  const { keyword } = useParams();
+
+  
+
 
   useEffect(() => {
     if (error) {
       toast.error(error); // ✅ show error toast
+      dispatch(clearErrors())// ✅ show error toast
     }
-    dispatch(getProduct());
-  }, [dispatch, error]);
+    dispatch(getProduct(keyword , currentPage));
+  }, [dispatch, error, keyword,currentPage]);
 
   const ratingChanged = (newRating) => {
     console.log(newRating);
@@ -85,10 +96,14 @@ const Products = () => {
                 </Link>
               ))}
           </div>
+
         </div>
+
       )}
     </>
   );
 };
 
 export default Products;
+
+

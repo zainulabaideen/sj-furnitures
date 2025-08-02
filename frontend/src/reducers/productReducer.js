@@ -8,7 +8,7 @@ import { All_PRODUCT_REQUEST,
   } from "../constants/productConstants"
 
 
- const productReducer = (state = { products: [] }, action) => {
+  export  const productReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case All_PRODUCT_REQUEST:
       return {
@@ -17,10 +17,11 @@ import { All_PRODUCT_REQUEST,
       };
 
     case All_PRODUCT_SUCCESS:
-      return {
+      return { 
         loading: false,
         products: action.payload.products,
-        productsCount: action.payload.productsCount
+        productsCount: action.payload.productsCount,
+        resultPerPage:action.payload.resultPerPage,
       };
 
     case All_PRODUCT_FAIL:
@@ -40,31 +41,65 @@ import { All_PRODUCT_REQUEST,
   }
 };
 
- const productDetailsReducer = (state = { product: {} }, action) => {
+
+
+
+//  export const productDetailsReducer = (state = { product: {} }, action) => {
+//   switch (action.type) {
+//     case  PRODUCT_DETAILS_REQUEST:
+//       return {
+//         loading: true,
+//         ...state,
+//       };
+
+//     case  PRODUCT_DETAILS_SUCCESS:
+//       return {
+//         loading: false,
+//         products: action.payload,
+
+//       };
+
+//     case PRODUCT_DETAILS_FAIL:
+//       return {
+//         loading: false,
+//         error: action.payload
+//       };
+
+//     case CLEAR_ERRORS:
+//       return {
+//         ...state,
+//         error: null
+//       };
+
+//     default:
+//       return state;
+//   }
+// };
+
+export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
-    case  PRODUCT_DETAILS_REQUEST:
+    case PRODUCT_DETAILS_REQUEST:
       return {
         loading: true,
         ...state,
       };
 
-    case  PRODUCT_DETAILS_SUCCESS:
+    case PRODUCT_DETAILS_SUCCESS:
       return {
         loading: false,
-        products: action.payload,
-
+        product: action.payload, // ✅ fixed here
       };
 
     case PRODUCT_DETAILS_FAIL:
       return {
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
 
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null
+        error: null,
       };
 
     default:
@@ -72,4 +107,3 @@ import { All_PRODUCT_REQUEST,
   }
 };
 
-export default productReducer;

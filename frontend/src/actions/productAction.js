@@ -6,13 +6,14 @@ import { All_PRODUCT_REQUEST,
    PRODUCT_DETAILS_SUCCESS,
    PRODUCT_DETAILS_FAIL,
     CLEAR_ERRORS} from "../constants/productConstants"
+    
 
 
-    export const getProduct = () => async(dispatch)=>{
+    export const getProduct = (keyword="" ,  currentPage = 1 ) => async(dispatch)=>{
         try {
             
      dispatch({type:All_PRODUCT_REQUEST});
-     const {data} = await axios.get("/api/products");
+     const {data} = await axios.get(`/api/products?keyword=${keyword}&page=${currentPage}`);
      dispatch({
         type:All_PRODUCT_SUCCESS,
         payload:data,
@@ -23,7 +24,7 @@ import { All_PRODUCT_REQUEST,
                 type: All_PRODUCT_FAIL,
                 payload: error.response.data.message
             })
-        }
+        } 
     }
  
 
