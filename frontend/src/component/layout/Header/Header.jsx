@@ -5,14 +5,17 @@ import { FiSearch } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import { useLocation, NavLink, Link } from "react-router-dom";
+import { useLocation, useNavigate, NavLink, Link } from "react-router-dom";
 import Hero from "../hero/Hero";
 import Mobileview from "../Mobileview/Mobileview";
+import UserProfile from "../../UserProfile/UserProfile"; // ✅ Adjust path if needed
+import { useSelector } from "react-redux";
 
 const Header = () => {
+
+  const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
-
   const [show, setShow] = useState(false);
   const [shadow, setShadow] = useState(false);
 
@@ -32,6 +35,12 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const totalCartItems = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
 
   const links = [
     { path: "/", label: "Home" },
@@ -87,19 +96,30 @@ const Header = () => {
             </ul>
 
             {/* Navbar Icons */}
-            <div className="font-bold flex md:gap-5 gap-2">
+            <div className="font-bold flex items-center md:gap-5 gap-2 relative">
               <Link to="/search">
                 <FiSearch className="cursor-pointer text-xl" />
               </Link>
-         
-              <Link to="/cart">
+              <NavLink to="/cart" className="relative">
                 <HiOutlineShoppingBag className="cursor-pointer text-xl" />
-              </Link>
-              <Link to="/login">
-                <FaRegUser className="cursor-pointer text-xl" />
-              </Link> 
-            </div>
+                <div className="absolute -top-2 -right-2 w-4 h-4 text-xs font-medium flex justify-center items-center bg-secondary text-white rounded-full">
+                  {totalCartItems}
+                </div>
+              </NavLink>
 
+              {/* User Icon and Profile Toggle */}
+              <FaRegUser
+                className="cursor-pointer text-xl"
+                onClick={() => navigate("/account")}
+              />
+
+
+              <Link to="/login">
+                <button className="bg-primary text-white px-5 py-2 rounded-full hover:bg-opacity-80">
+                  Login
+                </button>
+              </Link>
+            </div>
           </nav>
 
           {/* Mobile View Sidebar */}

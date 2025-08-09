@@ -11,34 +11,43 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-            {
-                const { id, quantity } = action.payload;
+
+            const item = action.payload;
+            const isItemExist = state.cartItems.find(
+                (i) => i.product === item.product
+            );
+            if (isItemExist) {
                 return {
                     ...state,
-                    cartItems: {
-                        ...state.cartItems,
-                        [id]: (state.cartItems[id] || 0) + quantity,
-                    },
+                    cartItems: state.cartItems.map((i) =>
+                        i.product === isItemExist.product ? item : i
+                    ),
                 };
-            }
 
-        case REMOVE_FROM_CART:
-            {
-                const id = action.payload;
-                const updatedQty = (state.cartItems[id] || 0) - 1;
-
-                const updatedCartItems = {...state.cartItems };
-                if (updatedQty > 0) {
-                    updatedCartItems[id] = updatedQty;
-                } else {
-                    delete updatedCartItems[id];
+            } else {
+                return {
+                    ...state,
+                    cartItems: [...state.cartItems, item],
                 }
-
-                return {
-                    ...state,
-                    cartItems: updatedCartItems,
-                };
             }
+
+        case REMOVE_FROM_CART: {
+            const id = action.payload;
+
+            const updatedCartItems = state.cartItems
+                .map(item =>
+                    item.product === id
+                        ? { ...item, quantity: item.quantity - 1 }
+                        : item
+                )
+                .filter(item => item.quantity > 0); // remove completely if qty = 0
+
+            return {
+                ...state,
+                cartItems: updatedCartItems,
+            };
+        }
+
 
         default:
             return state;

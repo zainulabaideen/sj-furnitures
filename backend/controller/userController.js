@@ -118,44 +118,88 @@ exports.logout = catchAsyncErrors(async(req,res,next)=> {
 
 //forward password
 
-exports.forwardPassword = catchAsyncErrors(async(req,res,next) => {
-  const user = await User.findOne({email:req.body.email});
-  if(!user){
-    return next(new ErrorHandler("User not found" , 404))
+// exports.forwardPassword = catchAsyncErrors(async(req,res,next) => {
+//   const user = await User.findOne({email:req.body.email});
+//   if(!user){
+//     return next(new ErrorHandler("User not found" , 404))
+//   }
+
+//   // get resetpassowr dtoken
+
+//   const resetToken =user.getResetPasswordToken();
+
+//   await user.save({validateBeforeSave: false});
+
+
+//   const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/password/reset/${resetToken}`
+  
+//   const message = `your password reset token is :- \n\n ${resetPasswordUrl} \N\N IF YOU HAVE NOT THIS REQUESTED EMAIL THEN PLEAS IGNORE IT `;
+
+//   try {
+//       await sendEmail({
+//          email: user.email,
+//          subject: 'Ecoerce password recovery',
+//          message,
+//       })
+//       res.status(200).json({
+//         success: true,
+//         message:`Email sent to ${user.email} successfully`
+//       })
+
+//   } catch (error) {
+//      user.resetPasswordToken = undefined;
+//      user.resetPasswordExpire = undefined;
+//   await user.save({validateBeforeSave: false});
+
+//   return next(new ErrorHandler(error.message,500))
+
+
+//   }
+// })
+exports.forwardPassword = catchAsyncErrors(async (req, res, next) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
   }
 
-  // get resetpassowr dtoken
+  // 1. Generate reset token
+  const resetToken = user.getResetPasswordToken();
 
-  const resetToken =user.getResetPasswordToken();
+  // DEBUG LOGGING: See what is being sent/stored
+  console.log("Raw reset token:", resetToken); // This is the one sent via email
+  console.log("Hashed token saved in DB:", user.resetPasswordToken);
 
-  await user.save({validateBeforeSave: false});
+  // 2. Save hashed token + expiry
+  await user.save({ validateBeforeSave: false });
 
+  // 3. Create reset URL
+  const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
-  const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/password/reset/${resetToken}`
-  
-  const message = `your password reset token is :- \n\n ${resetPasswordUrl} \N\N IF YOU HAVE NOT THIS REQUESTED EMAIL THEN PLEAS IGNORE IT `;
+  // 4. Message
+  const message = `Your password reset token is:\n\n${resetPasswordUrl}\n\nIf you did not request this email, please ignore it.`;
 
   try {
-      await sendEmail({
-         email: user.email,
-         subject: 'Ecoerce password recovery',
-         message,
-      })
-      res.status(200).json({
-        success: true,
-        message:`Email sent to ${user.email} successfully`
-      })
+    await sendEmail({
+      email: user.email,
+      subject: "Ecommerce Password Recovery",
+      message,
+    });
 
+    res.status(200).json({
+      success: true,
+      message: `Reset email sent to ${user.email}`,
+    });
   } catch (error) {
-     user.resetPasswordToken = undefined;
-     user.resetPasswordExpire = undefined;
-  await user.save({validateBeforeSave: false});
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
 
-  return next(new ErrorHandler(error.message,500))
-
-
+    return next(new ErrorHandler("Email sending failed: " + error.message, 500));
   }
-})
+});
 
 
 //reset password
@@ -225,30 +269,108 @@ exports.updatePassword = catchAsyncErrors(async(req,res,next) => {
 })
 
 //update user profile
-exports.updateProfile = catchAsyncErrors(async(req,res,next) => {
+// exports.updateProfile = catchAsyncErrors(async(req,res,next) => {
 
-   const newUserData={
-    name:req.body.name,
-    email:req.body.email,
-   }
+//    const newUserData={
+//     name:req.body.name,
+//     email:req.body.email,
+//    }
 
 
-   const user = await User.findByIdAndUpdate(req.user.id,newUserData , {
-    new: true,
-    runValidators:true,
-    useFindAndModify : false ,
-   });
+//    const user = await User.findByIdAndUpdate(req.user.id,newUserData , {
+//     new: true,
+//     runValidators:true,
+//     useFindAndModify : false ,
+//    });
 
 
   
 
  
-  sendToken(200).json({
-    success:true,
+//   sendToken(200).json({
+//     success:true,
 
-  })
+//   })
   
-})
+// })
+
+// exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+//   const newUserData = {
+//     name: req.body.name,
+//     email: req.body.email,
+//   };
+
+ 
+//   if(req.body.avatar !== ""){
+//      const user = await user.findById(req.user.id);
+//      const imageId = user.avatar.public_ID;
+
+//      await cloudinary.v2.uploader.destroy(imageId);
+
+//       const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+//       folder: "avatars",
+//       width: 150,
+//       crop: "scale",
+//     });
+//  newUserData.avatar = {
+//   public_ID: myCloud.public_ID,
+//   url: myCloud.secure_url,
+//  }
+
+//   }
+
+//   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+//     new: true,
+//     runValidators: true,
+//     useFindAndModify: false,
+//   });
+
+//   sendToken(user, 200, res).json({
+//     success:true,
+
+//  }) 
+// });
+
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  // If a new avatar is uploaded
+  if (req.files && req.files.avatar) {
+    const user = await User.findById(req.user.id);
+    const imageId = user.avatar.public_ID;
+
+    await cloudinary.v2.uploader.destroy(imageId);
+
+    const file = req.files.avatar;
+
+    const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_ID: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+
 
 
 //get all users

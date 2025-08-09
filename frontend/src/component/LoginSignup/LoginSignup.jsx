@@ -5,7 +5,7 @@ import avatarPlaceholder from "../../assets/avatar.jpg";
 import { registerUser, loginUser } from "../../actions/userActions";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginSignup = () => {
   const dispatch = useDispatch();
@@ -174,9 +174,9 @@ const LoginSignup = () => {
 
           {!isSignUp && (
             <div className="mt-4 text-right">
-              <a href="#" className="text-secondary text-sm hover:underline">
+              <Link to="/password/forgot" className="text-secondary text-sm hover:underline">
                 Forgot your password?
-              </a>
+              </Link>
             </div>
           )}
 

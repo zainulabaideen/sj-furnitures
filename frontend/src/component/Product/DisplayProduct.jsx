@@ -28,11 +28,15 @@ const DisplayProduct = () => {
     dispatch(getProductDetails(id));
   }, [dispatch, id , error]);
 
-  const inc = () => setQuantity((q) => q + 1);
+  const inc = () => {
+    if(product.stock <= quantity) return;
+    setQuantity((q) => q + 1);
+  }
   const dec = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product._id, quantity));
+    dispatch(addToCart(id, quantity)); 
+    toast.success("Item Added To Cart");
   };
 
   if (loading) return <div className="p-10 text-xl">Loading product...</div>;
