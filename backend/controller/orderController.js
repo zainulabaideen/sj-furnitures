@@ -1,4 +1,5 @@
 const Order = require("../models/orderModel");
+const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorhandling");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
 const apiFeatures = require("../utils/apiFeatures");
@@ -36,7 +37,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 })
 
 
-// get single order
+
 
 exports.getSingleOrders = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id).populate("user", "name email");
@@ -50,8 +51,23 @@ exports.getSingleOrders = catchAsyncErrors(async (req, res, next) => {
   })
 });
 
-// get login users order
+// exports.getSingleOrders = catchAsyncErrors(async (req, res, next) => {
+//   const order = await Order.findById(req.params.id)
+//     .populate("user", "name email");
 
+//   if (!order) {
+//     return next(new ErrorHandler("Order not found with this Id", 404));
+//   }
+
+//   res.status(200).json({
+//     success: true,
+//     order,
+//   });
+// });
+
+
+// get login users order
+ 
 exports.myOrders = catchAsyncErrors(async (req, res, next) => {
   const orders = await Order.find({ user: req.user._id })
 

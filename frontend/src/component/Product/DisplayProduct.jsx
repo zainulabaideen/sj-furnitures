@@ -21,21 +21,22 @@ const DisplayProduct = () => {
   const { product, loading, error } = useSelector((state) => state.productDetails);
 
   useEffect(() => {
-     if (error) {
-          toast.error(error); // ✅ show error toast
-          dispatch(clearErrors())
-        }
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
     dispatch(getProductDetails(id));
-  }, [dispatch, id , error]);
+  }, [dispatch, id, error]);
 
   const inc = () => {
-    if(product.stock <= quantity) return;
+    if (product.stock <= quantity) return;
     setQuantity((q) => q + 1);
-  }
+  };
+
   const dec = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
 
   const handleAddToCart = () => {
-    dispatch(addToCart(id, quantity)); 
+    dispatch(addToCart(id, quantity));
     toast.success("Item Added To Cart");
   };
 
@@ -44,10 +45,11 @@ const DisplayProduct = () => {
   if (!product || !product._id) return <div className="p-10 text-xl text-red-600">Product not found.</div>;
 
   return (
-    <div className="mt-20 pt-10 md:px-20 px-3">
-      <div className="flex md:flex-row flex-col md:items-start items-center justify-between h-auto md:h-[60vh] space-y-5">
-        {/* Image section */}
-        <div className="basis-[43%]">
+    <main className="mt-20 pt-10 md:px-20 px-3">
+      <article className="flex md:flex-row flex-col md:items-start items-center justify-between h-auto md:h-[60vh] space-y-5">
+        
+        {/* Product Image */}
+        <figure data-aos="fade-right" className="basis-[43%]">
           <div className="overflow-hidden rounded-lg w-full max-w-lg">
             <img
               src={product.image || img}
@@ -55,12 +57,12 @@ const DisplayProduct = () => {
               className="w-full h-[50vh] object-cover rounded-lg transition transform ease-in-out duration-700 hover:scale-110"
             />
           </div>
-        </div>
+        </figure>
 
         {/* Product Info */}
-        <div className="basis-[48%] space-y-5">
-          <div className="flex gap-10 items-center">
-            <h2 className="text-3xl font-bold text-gray-800">{product.name}</h2>
+        <section data-aos="fade-left" className="basis-[48%] space-y-5">
+          <header className="flex gap-10 items-center">
+            <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
             <ReactStars
               count={5}
               size={24}
@@ -70,16 +72,16 @@ const DisplayProduct = () => {
               color="#e5e7eb"
               activeColor="#facc15"
             />
-          </div>
+          </header>
 
           <p className="text-gray-800 font-semibold">PKR {product.price.toLocaleString()}</p>
           <p>{product.description}</p>
 
           <div className="my-7 flex items-center gap-10">
             <div className="flex gap-5 border-[1px] py-2 rounded-md px-5">
-              <button onClick={dec}>-</button>
+              <button aria-label="Decrease quantity" onClick={dec}>-</button>
               <p>{quantity}</p>
-              <button onClick={inc}>+</button>
+              <button aria-label="Increase quantity" onClick={inc}>+</button>
             </div>
 
             <button
@@ -92,43 +94,42 @@ const DisplayProduct = () => {
 
           <p className="text-sm text-gray-500">Stock: {product.stock > 0 ? product.stock : "Out of stock"}</p>
           <p className="text-sm text-gray-500">Category: {product.category}</p>
-        </div>
-      </div>
+        </section>
+      </article>
 
-      {/* Tabs: Details & Reviews */}
-      <div>
-        <div className="flex w-full items-center justify-center gap-4 mt-10 border-b">
-          <button
-            onClick={() => setActiveTab("details")}
-            className={`px-4 py-2 font-semibold w-1/2 md:w-[30%] ${activeTab === "details" ? "border-b-2 border-secondary text-secondary" : ""
-              }`}
-          >
-            Details
-          </button>
-          <button
-            onClick={() => setActiveTab("reviews")}
-            className={`px-4 py-2 font-semibold w-1/2 md:w-[30%] ${activeTab === "reviews" ? "border-b-2 border-secondary text-secondary" : "text-gray-500"
-              }`}
-          >
-            Rating & Reviews
-          </button>
-        </div>
+      {/* Tabs Section */}
+      <nav data-aos="fade-up" className="flex w-full items-center justify-center gap-4 mt-10 border-b" aria-label="Product details and reviews">
+        <button
+          onClick={() => setActiveTab("details")}
+          className={`px-4 py-2 font-semibold w-1/2 md:w-[30%] ${activeTab === "details" ? "border-b-2 border-secondary text-secondary" : ""
+            }`}
+        >
+          Details
+        </button>
+        <button
+          onClick={() => setActiveTab("reviews")}
+          className={`px-4 py-2 font-semibold w-1/2 md:w-[30%] ${activeTab === "reviews" ? "border-b-2 border-secondary text-secondary" : "text-gray-500"
+            }`}
+        >
+          Rating & Reviews
+        </button>
+      </nav>
 
-        <div className="mt-6">
-          {activeTab === "details" ? (
-            <ProductDetails product={product} />
-          ) : (
-            <RatingReviews product={product} />
-          )}
-        </div>
-
-      </div>
+      <section data-aos="fade-up" className="mt-6">
+        {activeTab === "details" ? (
+          <ProductDetails product={product} />
+        ) : (
+          <RatingReviews product={product} />
+        )}
+      </section>
 
       {/* Related Products */}
-      <div className="mt-16">
+      <aside data-aos="fade-up" className="mt-16" aria-label="Related products">
         <RelatedProducts category={product.category} currentProductId={product._id} />
-      </div>
-    </div>
+      </aside>
+
+      <ToastContainer />
+    </main>
   );
 };
 

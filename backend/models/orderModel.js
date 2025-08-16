@@ -34,7 +34,7 @@ const orderSchema = new mongoose.Schema({
             },
             image:{
                  type:String,
-            required: true,
+            // required: true,
             },
             product:{
                 type: mongoose.Schema.ObjectId,
@@ -46,7 +46,7 @@ const orderSchema = new mongoose.Schema({
     ],
     user:{
           type: mongoose.Schema.ObjectId,
-                ref: "User",
+                ref: "user",
                 required: true,
     },
     paymentInfo:{
@@ -60,7 +60,7 @@ const orderSchema = new mongoose.Schema({
         },
         paidAt:{
                  type:Date,
-            required:true,
+            // required:true,
         },
         itemsPrice:{
             type:Number,

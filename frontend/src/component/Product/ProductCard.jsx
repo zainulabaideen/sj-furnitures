@@ -7,49 +7,64 @@ const ProductCard = ({ products, filter }) => {
     filter === "all" ? products : products.filter((p) => p.category === filter);
 
   return (
-    <div className="flex justify-center w-full py-10 ">
-      <div className=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 text-primaryTextClr items-stretch">
+    <section
+      className="flex justify-center w-full py-10"
+      aria-label="Product cards"
+    >
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 text-primaryTextClr items-stretch">
         {filtered.map((item) => (
-          <Link
-            to={`/product/${item.id}`}
-            state={{ product: item }}
+          <article
             key={item.id}
+            className="bg-gray-50 rounded-xl overflow-hidden shadow-lg flex flex-col h-full"
           >
-            <div className="bg-gray-50 rounded-xl overflow-hidden shadow-lg flex flex-col h-full ">
-              <div className=" overflow-hidden">
+            <Link
+              to={`/product/${item.id}`}
+              state={{ product: item }}
+              className="block h-full"
+            >
+              <figure className="overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.name}
                   className="h-72 w-full object-cover transition transform ease-in-out duration-700 hover:scale-110"
+                  loading="lazy"
                 />
-              </div>
+              </figure>
 
               <div className="p-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <p>{item.name}</p>
+                <header className="flex items-center justify-between">
+                  <h2 className="text-lg font-medium">{item.name}</h2>
                   <ReactStars
                     count={5}
-                    size={24}
+                    size={20}
                     value={item.ratingValue}
                     edit={false}
                     char="★"
                     color="#e5e7eb"
                     activeColor="#facc15"
                   />
-                </div>
-                <p className=" text-start">{item.description}</p>
-                <div className="flex gap-4">
-                  <span className="font-bold text-gray-600">${item.new_price}</span>
-                  <span className="line-through">
-                    ${item.old_price}
+                </header>
+
+                <p className="text-start text-sm text-gray-600">
+                  {item.description}
+                </p>
+
+                <footer className="flex gap-4 items-center">
+                  <span className="font-bold text-gray-600">
+                    ${item.new_price}
                   </span>
-                </div>
+                  {item.old_price && (
+                    <span className="line-through text-gray-400">
+                      ${item.old_price}
+                    </span>
+                  )}
+                </footer>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
