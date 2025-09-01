@@ -3,7 +3,7 @@ import AboutBanner from "../../assets/AboutBanner.jpg";
 
 const Banner = () => {
   return (
-    <section className="relative h-screen w-full">
+    <section className="relative md:h-screen h-[60vh] w-full">
       {/* Background image */}
       <img
         src={AboutBanner}

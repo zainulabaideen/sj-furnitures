@@ -87,6 +87,7 @@ const DealsOfTheDay = () => {
               >
                 Shop Now <FaArrowRight />
               </Link>
+              
             </div>
           </article>
         ))}

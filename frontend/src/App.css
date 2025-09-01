@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* .App-header {
     background-color: #282c34;
     min-height: 100vh;
@@ -11,16 +12,40 @@
     font-size: calc(10px + 2vmin);
     color: white;
 } */
+
 * {
-  margin: 0;
-  scroll-behavior: smooth;
+    margin: 0;
+    scroll-behavior: smooth;
 }
+
 body {
     color: #b4b2b2;
     overflow-x: hidden;
 }
 
+
+/* Add to your global CSS */
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 :root {
+    --primary: #663200;
+    --secondary: #ff8901;
+}
+
+root {
+    --primary: #663200;
+    --secondary: #ff8901;
+}
+
+root {
     --primary: #663200;
     --secondary: #ff8901;
 }

@@ -83,7 +83,7 @@ const Testimonials = () => {
               <img
                 src={item.avatar}
                 alt={`${item.name} - ${item.role}`}
-                className="w-20 h-20 rounded-full"
+                className="w-16 h-16 rounded-full"
               />
               <div>
                 <p className="text-xl font-bold">{item.name}</p>
@@ -99,14 +99,14 @@ const Testimonials = () => {
         <button
           onClick={prev}
           aria-label="Previous testimonial"
-          className="absolute md:left-20 left-3 top-1/2 -translate-y-1/2 z-20 hidden md:grid place-content-center w-10 h-10 bg-white rounded-full text-gray-300 text-2xl"
+          className="absolute md:left-20 left-3 top-1/2 -translate-y-1/2 z-20 md:grid place-content-center md:w-10 md:h-10 bg-white rounded-full text-gray-500 text-2xl"
         >
           <MdKeyboardArrowLeft />
         </button>
         <button
           onClick={next}
           aria-label="Next testimonial"
-          className="absolute md:right-20 right-3 top-1/2 -translate-y-1/2 z-20 hidden md:grid place-content-center w-10 h-10 bg-white rounded-full text-gray-300 text-2xl"
+          className="absolute md:right-20 right-3 top-1/2 -translate-y-1/2 z-20 md:grid place-content-center md:w-10 md:h-10 bg-white rounded-full text-gray-500 text-2xl"
         >
           <MdKeyboardArrowRight />
         </button>

@@ -1,28 +1,77 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import avatarPlaceholder from "../../assets/avatar.jpg";
 import { registerUser, loginUser } from "../../actions/userActions";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import { Link, useNavigate , useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-const LoginSignup = ({onClose }) => {
+const LoginSignup = ({ onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { error, loading, isAuthenticated } = useSelector((state) => state.user);
-
   const [isSignUp, setIsSignUp] = useState(true);
+
+  // 👉 Put redirect definition here (before using it in effects)
+  const redirect = location.search ? location.search.split("=")[1] : "/account";
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    phone: "",
+    address: "",
     avatar: null,
   });
   const [avatarPreview, setAvatarPreview] = useState(avatarPlaceholder);
+
+  const { error, loading, isAuthenticated, isRegistered } = useSelector(
+    (state) => state.user
+  );
+
+useEffect(() => {
+  if (isRegistered && isSignUp) { 
+    navigate("/verify-otp", { 
+      state: { email: formData.email },
+      replace: true // This prevents going back to registration
+    });
+    
+    // ✅ Show only one toast
+    toast.success("Registration successful! Please verify your email.", {
+      autoClose: 3000,
+    });
+    
+    // ✅ Reset the registration flag
+    dispatch({ type: "USER_REGISTERED_RESET" });
+  }
+
+  if (isAuthenticated && !isSignUp) {
+    toast.success("Login Successful!", { autoClose: 3000 });
+    navigate(redirect);
+    
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
+      address: "",
+      avatar: null,
+    });
+    setAvatarPreview(avatarPlaceholder);
+  }
+
+  if (error) {
+    if(error=="Please login to access this resource"){
+      dispatch({ type: "CLEAR_ERRORS" });
+    } else {
+      toast.error(error);
+      dispatch({ type: "CLEAR_ERRORS" });
+    }
+  }
+}, [isRegistered, isAuthenticated, error, isSignUp, navigate, redirect, formData.email, dispatch]);
 
   useEffect(() => {
     if (formData.avatar) {
@@ -32,29 +81,6 @@ const LoginSignup = ({onClose }) => {
     }
   }, [formData.avatar]);
 
-   const redirect = location.search
-    ? location.search.split("=")[1]
-    : "/account";
-  useEffect(() => {
-
-    if (isAuthenticated) {
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        avatar: null,
-      });
-      setAvatarPreview(avatarPlaceholder);
-      toast.success("Login Successful!");
-      navigate(redirect);
-    }
-
-
-    if (error) {
-      toast.error(error);
-    }
-  }, [isAuthenticated, error, navigate , redirect]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignUp) {
@@ -62,6 +88,8 @@ const LoginSignup = ({onClose }) => {
       myForm.set("name", formData.name);
       myForm.set("email", formData.email);
       myForm.set("password", formData.password);
+      myForm.set("phone", formData.phone);
+      myForm.set("address", formData.address);
       if (formData.avatar) {
         myForm.set("avatar", formData.avatar);
       }
@@ -81,19 +109,14 @@ const LoginSignup = ({onClose }) => {
   };
 
   return (
-    <div className="relative content-center bg-white z-50 text-primaryTextClr lg:w-[900px] mx-5 h-[550px] lg:mx-auto overflow-hidden shadow-lg rounded-xl">
-      <ToastContainer />
-
+    <div className="relative content-center bg-white z-50 text-primaryTextClr lg:w-[900px] mx-5 md:h-[560px] h-[620px] lg:mx-auto overflow-hidden shadow-lg rounded-xl">
       {/* Brown Panel */}
-
-
       <div
         className={`md:block hidden absolute top-0 h-full w-[40%] bg-primary text-white p-10 transition-transform duration-700 ease-in-out z-20 overflow-hidden ${isSignUp ? "translate-x-0" : "translate-x-[150%]"
           }`}
       >
-        {/* Content Container */}
         <div className="relative w-full h-full overflow-hidden">
-          {/* Welcome Back Content - Slides from right */}
+          {/* Welcome Back */}
           <div
             className={`absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center transition-transform duration-700 ease-in-out ${isSignUp ? "translate-x-0" : "translate-x-full"
               }`}
@@ -110,7 +133,7 @@ const LoginSignup = ({onClose }) => {
             </button>
           </div>
 
-          {/* New Here Content - Slides from left */}
+          {/* New Here */}
           <div
             className={`absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center transition-transform duration-700 ease-in-out ${isSignUp ? "-translate-x-full" : "translate-x-0"
               }`}
@@ -129,7 +152,6 @@ const LoginSignup = ({onClose }) => {
         </div>
       </div>
 
-
       {/* Form Panel */}
       <form
         onSubmit={handleSubmit}
@@ -142,9 +164,8 @@ const LoginSignup = ({onClose }) => {
           </h2>
           <p className="mb-6">{isSignUp ? "Join us by filling out the info" : "Sign in to your account"}</p>
 
-
           {isSignUp && (
-            <div className="space-y-10 flex items-center flex-col">
+            <div className="space-y-4 flex items-center flex-col">
               <label htmlFor="avatar-upload" className="cursor-pointer">
                 <img
                   src={avatarPreview}
@@ -167,6 +188,28 @@ const LoginSignup = ({onClose }) => {
                 name="name"
                 placeholder="Name"
                 value={formData.name}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 rounded-sm bg-gray-100 focus:outline-none"
+                required
+              />
+
+              {/* ✅ New Phone Field */}
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 rounded-sm bg-gray-100 focus:outline-none"
+                required
+              />
+
+              {/* ✅ New Address Field */}
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                value={formData.address}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 rounded-sm bg-gray-100 focus:outline-none"
                 required
@@ -222,9 +265,7 @@ const LoginSignup = ({onClose }) => {
         </div>
       </form>
 
-
-      {/* close btn  to close the login signup page */}
-
+      {/* Close button */}
       <button
         onClick={onClose}
         className={`absolute top-4 right-4 z-50 outline-none ${isSignUp ? "" : "md:text-white"}`}

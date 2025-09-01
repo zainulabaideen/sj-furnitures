@@ -32,7 +32,7 @@ const MyOrders = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="min-h-screen bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-100 px-6 py-10">
+        <div className="min-h-screen bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-100 px-6 py-10 mt-10">
           <div className="max-w-6xl mx-auto backdrop-blur-lg bg-white/80 rounded-3xl shadow-2xl p-8 border border-gray-200">
             <h1 className="text-4xl font-extrabold text-gray-800 mb-8 tracking-tight">
               {user?.name}'s Orders

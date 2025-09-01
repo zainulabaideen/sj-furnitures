@@ -43,7 +43,7 @@ const Feature = () => {
       data-aos="fade-up"
       className="border border-inherit md:mx-20 mx-3 md:mt-20 my-10 px-4 py-8"
     >
-      <div className="flex md:justify-center w-full">
+      <div className="flex justify-center w-full">
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 text-start md:text-center">
           {infoItems.map((item, index) => (
             <li

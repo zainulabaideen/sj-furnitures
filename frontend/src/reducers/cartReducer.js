@@ -6,17 +6,18 @@ import {
 } from "../constants/cartConstants";
 
 const initialState = {
-    cartItems: {} // { [productId]: quantity }
+    cartItems: [],
+    shippingInfo: {}
 };
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-
             const item = action.payload;
             const isItemExist = state.cartItems.find(
                 (i) => i.product === item.product
             );
+            
             if (isItemExist) {
                 return {
                     ...state,
@@ -24,7 +25,6 @@ const cartReducer = (state = initialState, action) => {
                         i.product === isItemExist.product ? item : i
                     ),
                 };
-
             } else {
                 return {
                     ...state,
@@ -34,26 +34,25 @@ const cartReducer = (state = initialState, action) => {
 
         case REMOVE_FROM_CART: {
             const id = action.payload;
-
             const updatedCartItems = state.cartItems
                 .map(item =>
                     item.product === id
                         ? { ...item, quantity: item.quantity - 1 }
                         : item
                 )
-                .filter(item => item.quantity > 0); // remove completely if qty = 0
+                .filter(item => item.quantity > 0);
 
             return {
                 ...state,
                 cartItems: updatedCartItems,
             };
         }
+        
         case SAVE_SHIPPING_INFO:
             return {
                 ...state,
                 shippingInfo: action.payload,
             }
-
 
         default:
             return state;

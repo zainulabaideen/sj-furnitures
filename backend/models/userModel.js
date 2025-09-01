@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
         minLength: [8, "Password should be greater than 8 characters"],
         select: false,
     },
+    phone: {
+        type: String,
+        required: [true, "Please enter your phone number"],
+    },
+    address: {
+        type: String,
+        required: [true, "Please enter your address"],
+    },
     avatar: {
         public_ID: {
             type: String,
@@ -37,8 +45,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "user"
     },
+    otp: String,
+    otpExpire: Date,
+    isVerified: {
+        type: Boolean,
+        enum: [true, false],
+        default: false,
+    },
     resetPasswordToken: String,
-    resetPasswordExpire: Date,  // ✅ corrected spelling
+    resetPasswordExpire: Date,
 });
 
 // Hash password before saving

@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
     images: [
         {
             public_ID: {
-                type: String,  
+                type: String,
                 required: true
             },
             url: {
@@ -48,23 +48,10 @@ const productSchema = new mongoose.Schema({
     },
     reviews: [
         {
-            user: {
-                type: mongoose.Schema.ObjectId,
-                ref: "user",
-                required: true,
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            reviews: {
-                type: Number,
-                required: true,
-            },
-            comment: {
-                type: String,
-                required: true
-            }
+            user: { type: mongoose.Schema.ObjectId, ref: "user", required: true },
+            name: { type: String, required: true },
+            rating: { type: Number, required: true }, // ✅ FIXED
+            comment: { type: String, required: true }
         }
     ],
 
@@ -77,7 +64,13 @@ const productSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
 
-    }
+    },
+
+    shipping: {
+        type: Number,
+        required: [true, "Please enter shipping cost"],
+        default: 0
+    },
 
 
 })

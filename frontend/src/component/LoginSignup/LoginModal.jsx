@@ -1,8 +1,10 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import LoginSignup from "./LoginSignup";
+import { useSelector } from "react-redux";
 
 const LoginModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
+    const { isAuthenticated } = useSelector((state) => state.user);
 
   const handleOverlayClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {

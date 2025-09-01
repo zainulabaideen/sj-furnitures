@@ -33,7 +33,7 @@ const Team = () => {
   ];
 
   return (
-    <section className="mt-10 md:mt-20 px-3 md:px-20 text-center space-y-10">
+    <section className="my-10 md:my-20 px-3 md:px-20 text-center space-y-10">
       <h1 className="text-primary font-bold md:text-4xl text-2xl">
         Meet Our <span className="text-secondary">Team</span>
       </h1>

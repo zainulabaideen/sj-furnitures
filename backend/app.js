@@ -3,16 +3,20 @@ const cookieParese = require("cookie-parser")
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload")
 const app = express();
-app.use(express.json());
+
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParese());
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(fileUpload({
-  useTempFiles: true,
+  useTempFiles: true,  
   tempFileDir: "/tmp/"
 }));
-const errorMiddleware = require("./middleware/error")
+  
 
+
+const errorMiddleware = require("./middleware/error")
 //route imports
  
 const product = require("./routes/productRoutes");

@@ -54,7 +54,7 @@ const FlashSale = () => {
         {saleProducts[0] && (
           <div
             data-aos="fade-right"
-            className="md:w-2/3 w-full flex flex-col justify-center items-center p-6 bg-gray-50 rounded-2xl"
+            className="md:w-1/2 w-full flex flex-col justify-center items-center p-6 bg-gray-50 rounded-2xl"
           >
             <h2
               id="flash-sale-heading"
@@ -104,15 +104,15 @@ const FlashSale = () => {
         {/* Right Side: Images */}
         <div
           data-aos="fade-left"
-          className="flex justify-center items-center gap-4"
+          className="flex justify-center items-center md:w-1/2 w-full"
         >
-          <div className="flex flex-row gap-4 md:h-full h-[40vh] overflow-hidden">
-            {saleProducts.slice(0, 2).map((product) => (
+          <div className="flex flex-row gap-4 h-full w-full  overflow-hidden">
+            {saleProducts.slice(0, 1).map((product) => (
               <img
                 key={product.id}
                 src={product.image}
                 alt={`${product.name} - Flash sale item`}
-                className="rounded-3xl object-cover h-full w-full"
+                className="rounded-md object-cover md:h-full h-1/2 w-full"
                 style={{ objectPosition: "center" }}
               />
             ))}

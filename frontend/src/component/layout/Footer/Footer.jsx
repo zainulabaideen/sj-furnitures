@@ -1,46 +1,57 @@
 import React from "react";
-import Title from "./Title";
 import logo from "../../../assets/logo[1].png";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { FaTiktok } from "react-icons/fa6";
 import { FaXTwitter, FaTelegram, FaVimeoV } from "react-icons/fa6";
+import { NavLink, Link } from "react-router-dom";
+
 
 const Footer = () => {
   const socialApps = [
     { name: "Facebook", icon: FaFacebook, appLink: "#" },
     { name: "Instagram", icon: FaInstagram, appLink: "#" },
     { name: "X (Twitter)", icon: FaXTwitter, appLink: "#" },
-    { name: "Telegram", icon: FaTelegram, appLink: "#" },
-    { name: "Vimeo", icon: FaVimeoV, appLink: "#" },
+    { name: "Tiktok", icon: FaTiktok, appLink: "#" },
+    { name: "Whatsapp", icon: IoLogoWhatsapp, appLink: "#" },
   ];
+
+  //Navlinks
+  const links = [
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/products", label: "Products" },
+  ];
+
 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer data-aos="fade-up" className="px-3 md:px-20 pb-10">
-      <Title />
+    <footer data-aos="fade-up" className="  px-3 md:px-20 pb-10">
 
-      <div className="lg:h-[50vh] flex w-full gap-[20%] md:space-y-0 space-y-10  flex-col lg:flex-row items-start justify-between">
-        
+
+      <div className="lg:h-[50vh] flex w-full gap-[10%] md:space-y-0 space-y-10  flex-col lg:flex-row items-start justify-between">
+
         {/* Left Side */}
         <section
           aria-labelledby="footer-branding"
-          className="h-full lg:w-1/2 w-full flex flex-col lg:items-start items-center pt-0 md:pt-10 justify-between md:gap-10 lg:order-first order-last "
+          className="h-full lg:w-1/2 w-full flex flex-col lg:items-start items-center justify-between lg:gap-10 gap-5 lg:order-first order-last "
         >
-          <div>
+          <div >
             <img
               src={logo}
               className="w-40"
               alt="JS Furniture Logo"
               loading="lazy"
             />
-            <p id="footer-branding">
-              We believe that good design should be easy to accept and
-              comfortable to enjoy.
-            </p>
-          </div>
 
-          <div className="w-full flex md:flex-row flex-col md:items-end items-center space-y-5 mt-5 justify-between">
-            
+          </div>
+          <p id="footer-branding">
+            We believe that good design should be easy to accept and
+            comfortable to enjoy.
+          </p>
+          <div className="w-full flex md:flex-row flex-col md:items-end items-center space-y-5 justify-between">
+
             {/* Social Media */}
             <nav aria-label="Social Media" className="lg:w-fit flex lg:grid grid-flow-col lg:grid-cols-2 lg:grid-rows-3 gap-2">
               {socialApps.map((item, index) => (
@@ -57,7 +68,7 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className="flex lg:flex-col flex-row text-sm">
-              <p>&copy; {currentYear} JS Furniture. All rights reserved.</p>
+              <p>&copy; {currentYear} SJ Furniture. All rights reserved.</p>
             </div>
           </div>
         </section>
@@ -70,60 +81,57 @@ const Footer = () => {
           <nav aria-label="Footer Navigation" className="lg:w-full">
             <ul
               id="footer-navigation"
-              className="flex flex-wrap gap-5 md:gap-20 items-center justify-between"
+              className="flex flex-wrap   items-center gap-5 justify-between"
             >
-              <li>
-                <a href="#" className="focus:text-hClr hover:text-hClr">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#" className="focus:text-hClr hover:text-hClr">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#" className="focus:text-hClr hover:text-hClr">
-                  Testimonials
-                </a>
-              </li>
-              <li>
-                <a href="#" className="focus:text-hClr hover:text-hClr">
-                  Products
-                </a>
-              </li>
+
+              {links.map(({ path, label }) => (
+                <li key={path}>
+                  <NavLink
+                    to={path}
+                    className={({ isActive }) =>
+                      `block cursor-pointer py-2 duration-300 hover:text-primary ${isActive
+                        ? "text-primary"
+                        : ""
+                      }`
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                </li>
+              ))}
+
             </ul>
           </nav>
 
           {/* Contact & Location */}
-          
-            
-            <address className="not-italic md:gap-0 gap-5 flex md:flex-row items-end flex-col  md:justify-between w-full">
-              <div>
-                <h2 className=" text-gray-600 font-semibold text-xl mb-2">
-                  Contact Us
-                </h2>
-                <p>
-                  <a href="tel:+19998887766">+1 (999) 888-77-66</a>
-                </p>
-                <p>
-                  <a href="mailto:jsfurniture@gmail.com">
-                    jsfurniture@gmail.com
-                  </a>
-                </p>
-              </div>
 
-              <div>
-                <h2 className="text-gray-600 font-semibold text-xl mb-2">
-                  Location
-                </h2>
-                <p>456789, Moscow</p>
-                <p>Mianistikiya 22/2/5, Office 4</p>
-              </div>
-            </address>
 
-          
-        
+          <address className="not-italic md:gap-0 gap-5 flex flex-row md:items-start items-center lg:mt-0 pt-5 justify-between w-full">
+            <div>
+              <h2 className=" text-gray-600 font-semibold text-xl mb-2">
+                Contact Us
+              </h2>
+              <p>
+                <a href="tel:+19998887766">+92 3244773614</a>
+              </p>
+              <p>
+                <a href="mailto:jsfurniture@gmail.com">
+                  sjfurniture.official@gmail.com
+                </a>
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-gray-600 font-semibold text-xl mb-2">
+                Location
+              </h2>
+              <p>Baldia Chowk , Kasur</p>
+              <p>Ghousia Colony Shah Jammat Furniture House </p>
+            </div>
+          </address>
+
+
+
         </section>
       </div>
     </footer>

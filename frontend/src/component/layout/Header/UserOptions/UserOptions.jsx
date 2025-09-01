@@ -11,31 +11,29 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
-
-
-
-
-
-
 const UserOptions = ({ user }) => {
   const history = createBrowserHistory();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log("UserOptions user:", user);
 
-
+  // Guard: if user is not loaded yet, don’t render anything
+  if (!user) return null;
 
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: orders },
     { icon: <PersonIcon />, name: "Profile", func: account },
-    { icon: <ExitToAppIcon />, name: "logout", func: logoutUser },
-  ]
+    { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
+  ];
 
-  if (user.role === "admin") {
-    options.unshift({ icon: <DashboardIcon />, name: "Dashboard", func: dashboard })
+  if (user?.role?.toLowerCase() === "admin") {
+    options.unshift({ icon: <DashboardIcon />, name: "Dashboard", func: dashboard });
   }
+
+
   function dashboard() {
-    navigate("/dashboard");
+    navigate("/admin/dashboard");
   }
   function orders() {
     navigate("/orders");
@@ -43,13 +41,12 @@ const UserOptions = ({ user }) => {
   function account() {
     navigate("/account");
   }
-
   function logoutUser() {
-    dispatch(logout()); // Call your Redux logout action
+    dispatch(logout());
     toast.success("Logout successfully", { toastId: "logoutSuccess" });
-
-    window.dispatchEvent(new Event("logout")); // Also emit a custom event if needed
+    window.dispatchEvent(new Event("logout"));
   }
+
 
 
 
@@ -61,30 +58,33 @@ const UserOptions = ({ user }) => {
         onOpen={() => setOpen(true)}
         open={open}
         direction='down'
-        style={{zIndex: "11"}}
-        className='speedDial'
+        style={{ zIndex: "1000" }}
+        className='speedDial md:top-20 top-24 '
         icon={
           <img
             className='speedDialIcon'
-            src={user.avatar.url ? user.avatar.url : "/Profile.png"}
+            src={user?.avatar?.url || "/default-avatar.jpg"} // ✅ safe check
             alt='Profile'
+            onError={(e) => {
+              e.currentTarget.onerror = null; // prevent infinite loop if fallback also fails
+              e.currentTarget.src = "/default-avatar.jpg";
+            }}
           />
-
         }
       >
         {options.map((item, i) => (
           <SpeedDialAction
-            key={item.name + i} // ✅ unique key
+            key={item.name + i}
             icon={item.icon}
             tooltipTitle={item.name}
             onClick={item.func}
           />
         ))}
-
-
       </SpeedDial>
     </Fragment>
-  )
-}
+  );
+};
+
+
 
 export default UserOptions 

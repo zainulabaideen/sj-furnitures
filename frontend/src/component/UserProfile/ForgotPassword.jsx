@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { loadUser, forgotPassword } from "../../actions/userActions";
 import Loader from "../layout/loader/Loader";

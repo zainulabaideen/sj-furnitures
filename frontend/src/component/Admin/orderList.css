@@ -1,0 +1,79 @@
+/* orderList.css */
+.orderListContainer {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  border-left: 1px solid rgba(0, 0, 0, 0.158);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-top: 100px;
+  padding-inline: 20px;
+}
+
+#orderListHeading {
+  font: 400 2rem "Roboto";
+  padding: 0.5vmax;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.637);
+  transition: all 0.3s;
+  margin: 2rem;
+  text-align: center;
+}
+
+.orderListTable {
+  background-color: white;
+  border: none !important;
+}
+
+/* Ensure these styles match exactly with productList.css */
+.MuiDataGrid-root .MuiDataGrid-columnHeader {
+  background-color: tomato !important; /* Tomato color for header */
+}
+
+.MuiDataGrid-columnHeader div {
+  color: rgb(255, 255, 255) !important; /* White text */
+}
+
+.MuiDataGrid-columnHeaders {
+  background-color: tomato !important; /* Tomato color for header */
+}
+
+.MuiDataGrid-iconSeparator {
+  display: none !important;
+}
+
+.MuiDataGrid-menuIcon {
+  color: white !important;
+}
+
+.MuiDataGrid-sortIcon {
+  color: white !important;
+}
+
+.MuiDataGrid-cell {
+  padding: 1vmax !important;
+}
+
+.MuiDataGrid-row {
+  transition: all 0.3s;
+}
+
+.MuiDataGrid-row:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Status colors */
+.greenColor {
+  color: green !important;
+}
+
+.redColor {
+  color: red !important;
+}
+
+@media screen and (max-width: 600px) {
+  .orderListTable div {
+    font: 300 4vw "Roboto";
+  }
+}

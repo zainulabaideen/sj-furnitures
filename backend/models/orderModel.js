@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
-
 const orderSchema = new mongoose.Schema({
     shippingInfo: {
-
         address: { type: String, required: true },
         city: { type: String, required: true },
         state: { type: String, required: true },
@@ -17,6 +15,7 @@ const orderSchema = new mongoose.Schema({
             required: true
         },
     },
+    shippingCharges: { type: Number, required: true },
 
     orderItems: [
         {
@@ -33,13 +32,17 @@ const orderSchema = new mongoose.Schema({
             required: true,
             },
             image:{
-                 type:String,
-            // required: true,
+                type:String,
+                required: true,
             },
             product:{
                 type: mongoose.Schema.ObjectId,
                 ref: "Product",
-                requiered: true,
+                required: true,
+            },
+            shipping: { // ✅ Add this field to store individual item shipping
+                type: Number,
+                default: 0,
             },
 
         }
@@ -80,7 +83,7 @@ const orderSchema = new mongoose.Schema({
             required:true,
 
         },
-         TotalPrice:{
+         totalPrice:{
             type:Number,
             default:0,
             required:true,
@@ -100,3 +103,4 @@ const orderSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model("order" ,orderSchema);
+

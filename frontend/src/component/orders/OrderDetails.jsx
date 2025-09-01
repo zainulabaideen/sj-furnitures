@@ -27,7 +27,6 @@ const OrderDetails = () => {
         <Loader />
       ) : ( 
         <>
-         
           <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
             <h1 className="text-2xl font-bold mb-6">
               Order #{order?._id}
@@ -62,10 +61,17 @@ const OrderDetails = () => {
                     ? "PAID"
                     : "NOT PAID"}
                 </p>
-                <p>  <span className="font-medium">Amount:</span> PKR
-  {order?.orderItems?.reduce((total, item) => total + (item.price * item.quantity), 0)}
-
-
+                <p>
+                  <span className="font-medium">Items Amount:</span> PKR{" "}
+                  {order?.paymentInfo?.itemsPrice}
+                </p>
+                <p>
+                  <span className="font-medium">Shipping Charges:</span> PKR{" "}
+                  {order?.shippingCharges}
+                </p>
+                <p>
+                  <span className="font-medium">Total Amount:</span> PKR{" "}
+                  {order?.paymentInfo?.totalPrice}
                 </p>
               </div>
             </section>
@@ -107,8 +113,8 @@ const OrderDetails = () => {
                       </Link>
                     </div>
                     <span className="font-medium">
-                      {item.quantity} x ₹{item.price} ={" "}
-                      <b>₹{item.price * item.quantity}</b>
+                      {item.quantity} x PKR {item.price} ={" "}
+                      <b>PKR {item.price * item.quantity}</b>
                     </span>
                   </div>
                 ))}

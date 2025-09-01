@@ -5,7 +5,7 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js")
 const crypto = require("crypto");
 const { trusted } = require("mongoose");
-const  cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary")
 
 
 //register a user
@@ -39,37 +39,152 @@ const  cloudinary = require("cloudinary")
 // });
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  try {
+    const { name, email, password, phone, address } = req.body;
 
-  let avatarData = {
-    public_ID: null,
-    url: null,
-  };
+    let avatarData = {
+      public_ID: null,
+      url: null,
+    };
 
-  if (req.files && req.files.avatar) {
-    const file = req.files.avatar;
+    if (req.files && req.files.avatar) {
+      const file = req.files.avatar;
 
-    const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-      folder: "avatars",
-      width: 150,
-      crop: "scale",
+      const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+
+      avatarData = {
+        public_ID: myCloud.public_id,
+        url: myCloud.secure_url,
+      };
+    }
+
+    // ✅ Generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+      phone,
+      address,
+      avatar: avatarData,
+      otp,
+      otpExpire: Date.now() + 1 * 60 * 1000, // ⏱️ valid for 1 minute
     });
 
-    avatarData = {
-      public_ID: myCloud.public_id,
-      url: myCloud.secure_url,
-    };
+    // ✅ Branded Email Message
+    const message = `
+Dear ${name},
+
+Welcome to **SJ-Furnitures**! 🪑✨  
+
+Thank you for registering with us. To complete your signup, please verify your email address using the OTP below:
+
+👉 **${otp}**
+
+⚠️ Note: This OTP will expire in **1 minute** for your security.  
+
+If you didn’t request this, kindly ignore this email.  
+
+Best regards,  
+The **SJ-Furnitures** Team 🛋️
+`;
+
+    await sendEmail({
+      email: user.email,
+      subject: "SJ-Furnitures - Verify Your Email",
+      message,
+    });
+
+    res.status(201).json({
+      success: true,
+      message:
+        "User registered successfully. Please verify the OTP sent to your email.",
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
   }
-
-  const user = await User.create({
-    name,
-    email,
-    password,
-    avatar: avatarData,
-  });
-
-  sendToken(user, 201, res);
 });
+
+
+
+exports.verifyOtp = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    if (user.otp !== otp || user.otpExpire < Date.now()) {
+      return next(new ErrorHandler("Invalid or expired OTP", 400));
+    }
+
+    // ✅ Clear OTP after successful verification
+    user.otp = undefined;
+    user.otpExpire = undefined;
+    user.isVerified = true;   // 🔹 Mark user as verified
+    await user.save();
+
+    // ✅ Send token so user gets logged in
+    sendToken(user, 200, res);
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+
+
+exports.resendOtp = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.otp = otp;
+    user.otpExpire = Date.now() + 1 * 60 * 1000; // 1 minute
+    await user.save();
+
+    const message = `
+Hello again 👋,  
+
+Here’s your new OTP for **SJ-Furnitures**:  
+
+👉 **${otp}**
+
+⚠️ This code will expire in **1 minute**.  
+
+If you didn’t request this OTP, please ignore this email.  
+
+Warm regards,  
+The **SJ-Furnitures** Team 🪑
+`;
+
+    await sendEmail({
+      email: user.email,
+      subject: "SJ-Furnitures - Resend OTP",
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "OTP resent successfully",
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
 
 
 
@@ -97,20 +212,20 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid email or password", 401))
   }
-  sendToken( user,200,res);
+  sendToken(user, 200, res);
 
 });
 
 //logout  user
 
-exports.logout = catchAsyncErrors(async(req,res,next)=> {
- res.cookie("token" , null, {
-  expires:new Date(Date.now()),
-  httpOnly: true,
- }); 
+exports.logout = catchAsyncErrors(async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
 
   res.status(200).json({
-    success : true,
+    success: true,
     message: " loggedout successfully"
   })
 })
@@ -132,7 +247,7 @@ exports.logout = catchAsyncErrors(async(req,res,next)=> {
 
 
 //   const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/password/reset/${resetToken}`
-  
+
 //   const message = `your password reset token is :- \n\n ${resetPasswordUrl} \N\N IF YOU HAVE NOT THIS REQUESTED EMAIL THEN PLEAS IGNORE IT `;
 
 //   try {
@@ -204,42 +319,42 @@ exports.forwardPassword = catchAsyncErrors(async (req, res, next) => {
 
 //reset password
 
-exports.resetPassword = catchAsyncErrors(async (req,res,next) => {
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   //create tokrn hash
-    const  resetPasswordToken = crypto.
-            createHash("sha256")
-            .update(req.params.token)
-            .digest("hex");
+  const resetPasswordToken = crypto.
+    createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
 
-            const user = await User.findOne({
-              resetPasswordToken,
-              resetPasswordExpire: {$gt : Date.now()},
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
 
-            })
+  })
 
-              if (!user) {
+  if (!user) {
     return next(new ErrorHandler("Reset password token is invalid or has been expired", 401))
   }
 
-  if(req.body.password !== req.body.confirmPassword){
-    return next(new ErrorHandler("Password does not password" , 400));
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler("Password does not password", 400));
 
   }
 
   user.password = req.body.password;
 
-    user.resetPasswordToken = undefined;
-     user.resetPasswordExpire = undefined;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
 
-    await user.save();
+  await user.save();
 
-    sendToken(user, 200,res);
+  sendToken(user, 200, res);
 
 })
- 
+
 //get user details
-exports.getUserDetails = catchAsyncErrors(async(req,res,next) => {
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
   const user = await User.findById(req.user.id);
   res.status(200).json({
@@ -250,7 +365,7 @@ exports.getUserDetails = catchAsyncErrors(async(req,res,next) => {
 })
 
 // update password user
-exports.updatePassword = catchAsyncErrors(async(req,res,next) => {
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
   const user = await User.findById(req.user.id).select("+password");
   const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
@@ -258,14 +373,14 @@ exports.updatePassword = catchAsyncErrors(async(req,res,next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHandler("old password is incorrect", 400))
   }
- if(req.body.newPassword != req.body.confirmPassword){
+  if (req.body.newPassword != req.body.confirmPassword) {
     return next(new ErrorHandler("password doesnot match", 400))
-      
- } 
 
- user.password = req.body.newPassword;
- await user.save();
-  sendToken(user,200,res);
+  }
+
+  user.password = req.body.newPassword;
+  await user.save();
+  sendToken(user, 200, res);
 })
 
 //update user profile
@@ -284,14 +399,14 @@ exports.updatePassword = catchAsyncErrors(async(req,res,next) => {
 //    });
 
 
-  
 
- 
+
+
 //   sendToken(200).json({
 //     success:true,
 
 //   })
-  
+
 // })
 
 // exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
@@ -300,7 +415,7 @@ exports.updatePassword = catchAsyncErrors(async(req,res,next) => {
 //     email: req.body.email,
 //   };
 
- 
+
 //   if(req.body.avatar !== ""){
 //      const user = await user.findById(req.user.id);
 //      const imageId = user.avatar.public_ID;
@@ -374,7 +489,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 
 //get all users
-exports.getAllUsers = catchAsyncErrors(async(req,res,next) => {
+exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   const users = await User.find();
   res.status(200).json({
     success: trusted,
@@ -384,9 +499,9 @@ exports.getAllUsers = catchAsyncErrors(async(req,res,next) => {
 })
 
 //get single users details admin
-exports.getSingleUsers = catchAsyncErrors(async(req,res,next) => {
+exports.getSingleUsers = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
-  if(!user){
+  if (!user) {
     return next(new ErrorHandler(`User does not exist with id : ${req.params.id}`))
   }
 
@@ -399,52 +514,52 @@ exports.getSingleUsers = catchAsyncErrors(async(req,res,next) => {
 
 //update user role
 
-exports.updateUserRole = catchAsyncErrors(async(req,res,next) => {
+exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 
-   const newUserData={
-    name:req.body.name,
-    email:req.body.email,
-    role:req.body.role,
-   }
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  }
 
 
-   const user = await User.findByIdAndUpdate(req.user.id,newUserData , {
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
-    runValidators:true,
-    useFindAndModify : false ,
-   });
+    runValidators: true,
+    useFindAndModify: false,
+  });
 
 
-  
 
- 
+
+
   sendToken(200).json({
-    success:true,
+    success: true,
 
   })
-  
+
 })
 
-  //delete user
+//delete user
 
-exports.deleteUser = catchAsyncErrors(async(req,res,next) => {
-
- 
+exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
 
-const user = await User.findById(req.params.id);
-if(!user){
-  return next(new ErrorHandler(`user does not exitswith id : ${req.params.id}`))
-}
 
 
-await user.deleteOne();
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(new ErrorHandler(`user does not exitswith id : ${req.params.id}`))
+  }
+
+
+  await user.deleteOne();
   sendToken(200).json({
-    success:true,
+    success: true,
     message: "user deleted successfully"
 
   })
-  
+
 })
 
 

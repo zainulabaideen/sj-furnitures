@@ -1,0 +1,32 @@
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.infoRow strong {
+  color: #333;
+  min-width: 100px;
+}
+
+.confirmCartItemsContainer .cartItemRow {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  gap: 15px;
+}
+
+.cartItemName {
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+}
+
+.cartItemName:hover {
+  text-decoration: underline;
+}
+
+.cartItemPrice {
+  margin-left: auto;
+  font-size: 14px;
+}

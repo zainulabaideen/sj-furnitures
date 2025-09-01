@@ -36,12 +36,12 @@ export default function SocialGallery() {
     <section
       aria-labelledby="social-gallery-heading"
       data-aos="fade-up"
-      className="py-20 flex flex-col items-center w-full"
+      className="md:py-20 py-10 md:px-0 px-3 flex flex-col items-center w-full"
     >
       {/* Section Header */}
       <header className="text-center">
         <div className="mb-2 text-sm text-gray-500 flex items-center justify-center">
-          <span className="border-t-2 border-secondary w-5 mr-2"></span>
+          <span className="text-secondary"> — </span>
           Follow Us
         </div>
         <h2
@@ -56,7 +56,7 @@ export default function SocialGallery() {
       </header>
 
       {/* Social Links */}
-      <ul className="grid grid-cols-4 md:gap-5 gap-2 w-full">
+      <ul className="grid md:grid-cols-4 grid-cols-2 md:gap-5 gap-2 w-full">
         {socials.map((social, idx) => (
           <li key={social.name}>
             <a
@@ -67,7 +67,7 @@ export default function SocialGallery() {
               onMouseEnter={() => setHovered(idx)}
               onFocus={() => setHovered(idx)}
               onMouseLeave={() => setHovered(null)}
-              className="relative aspect-square rounded-xl overflow-hidden shadow-md flex items-center justify-center group"
+              className="relative aspect-square md:rounded-xl rounded-sm overflow-hidden shadow-md flex items-center justify-center group"
               aria-label={`Follow us on ${social.name}`}
             >
               <img
