@@ -6,7 +6,6 @@ import { useNavigate, } from "react-router-dom";
 import { loadUser, updateProfile } from "../../actions/userActions";
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
 import Loader from "../layout/loader/Loader";
-import { clearErrors } from "../../actions/productAction"
 
 const UpdateProfile = () => {
   const { user } = useSelector((state) => state.user);

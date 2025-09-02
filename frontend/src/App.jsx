@@ -1,3 +1,4 @@
+import React,{ useEffect } from "react";
 import { Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
 import AOS from 'aos';
 import "./App.css";
@@ -13,7 +14,6 @@ import Search from "./component/Search/Search.jsx";
 import Products from "./component/Product/Products.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect } from "react";
 import store from "./store.js";
 import { loadUser } from "./actions/userActions.js";
 import UserOptions from "./component/layout/Header/UserOptions/UserOptions.jsx";

@@ -1,5 +1,4 @@
 import React from "react";
-import FlashSale from "./FlashSale";
 import Testimonial from "./Testimonial";
 import SocialGallery from "./SocialGallery";
 import Hero from "./Hero"

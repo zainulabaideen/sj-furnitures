@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartAction";
 import { createOrder } from "../../actions/orderAction";
 import { useNavigate, Link } from "react-router-dom";
-import img from "../../assets/p1_img.jpg";
 import { Country, State } from "country-state-city";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

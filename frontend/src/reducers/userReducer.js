@@ -112,11 +112,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isRegistered: true,
       };
-    case "USER_REGISTERED_RESET":
-      return {
-        ...state,
-        isRegistered: false,
-      };
+  
     default:
       return state;
   }
