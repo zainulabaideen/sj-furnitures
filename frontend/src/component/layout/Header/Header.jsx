@@ -11,6 +11,7 @@ import { useLocation, useNavigate, NavLink, Link } from "react-router-dom";
 import Mobileview from "../Mobileview/Mobileview";
 import { useSelector } from "react-redux";
 import Loader from "../loader/Loader"; // ✅ use Loader
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Header = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Header = () => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.get("/api/categories");
+      const { data } = await axios.get(`${API_URL}/api/categories`);
       setCategories(data.categories);
     } catch (err) {
       console.error("Error fetching categories", err);
@@ -99,10 +100,11 @@ const Header = () => {
           </div>
 
           {/* Logo */}
-          <div className="logo text-center">
+          <Link to='/'>
+          <div className="logo text-center cursor-pointer">
             <img src={logo} alt="Logo" className="lg:w-52 w-40" />
           </div>
-
+</Link>
           {/* Navbar Items */}
           <ul className="hidden text-primary lg:flex gap-5 relative">
             {links.map(({ path, label }) => (
