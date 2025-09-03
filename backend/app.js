@@ -2,8 +2,16 @@ const express = require('express');
 const cookieParese = require("cookie-parser")
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload")
+const cors = require("cors");
 const app = express();
 
+app.use(cors({
+  origin: [
+    "http://localhost:3000",      // local dev
+    "https://sjfurnitures.store"  // production frontend
+  ],
+  credentials: true
+}));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParese());
