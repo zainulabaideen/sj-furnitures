@@ -2,7 +2,7 @@ const app = require("./app");
 const dotenv = require("dotenv")
 const connectDatabase = require("./config/db")
 const  cloudinary = require("cloudinary")
-  
+const cors = require("cors");
 
 // expection hanlding 
 process.on("uncaughtException" , (err) => {
@@ -14,6 +14,13 @@ process.on("uncaughtException" , (err) => {
    
 
 })
+app.use(cors({
+  origin: [
+    "http://localhost:3000",       // local dev
+    "https://sjfurnitures.store"   // your frontend domain
+  ],
+  credentials: true
+}));
 
 //config
  

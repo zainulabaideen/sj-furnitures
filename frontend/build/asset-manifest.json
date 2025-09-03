@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6b261242.css",
+    "main.js": "/static/js/main.0d2ff55e.js",
+    "static/media/AboutBanner.jpg": "/static/media/AboutBanner.1e97c7fe394132b35a50.jpg",
+    "static/media/logo[1].png": "/static/media/logo[1].a63f8c9676eae17a7417.png",
+    "static/media/hero.avif": "/static/media/hero.6e45943a8cc28de4b215.avif",
+    "static/media/bestStore_3.webp": "/static/media/bestStore_3.ef2dde1610857941e8aa.webp",
+    "static/media/avatar.jpg": "/static/media/avatar.f6dda784cc11132d38c7.jpg",
+    "static/media/bestStore_2.webp": "/static/media/bestStore_2.eb8a65aea916ec15d559.webp",
+    "static/media/test-background.jpg": "/static/media/test-background.53d0b71a595c5aa0e2d3.jpg",
+    "static/media/Story-Banner.jpg": "/static/media/Story-Banner.6ea7fab92565d2c4ee70.jpg",
+    "static/media/bestStore_1.webp": "/static/media/bestStore_1.7a21056ca84588dd5e93.webp",
+    "static/media/team1.webp": "/static/media/team1.955daa326847175c0195.webp",
+    "static/media/team3.webp": "/static/media/team3.7523ba2d8fd0ffd96f18.webp",
+    "static/media/team2.webp": "/static/media/team2.75af6e22e99877fb265c.webp",
+    "static/media/team4.webp": "/static/media/team4.682e87e2669878db4c9a.webp",
+    "index.html": "/index.html",
+    "main.6b261242.css.map": "/static/css/main.6b261242.css.map",
+    "main.0d2ff55e.js.map": "/static/js/main.0d2ff55e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6b261242.css",
+    "static/js/main.0d2ff55e.js"
+  ]
+}
