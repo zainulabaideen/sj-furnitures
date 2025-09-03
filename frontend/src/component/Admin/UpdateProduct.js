@@ -18,6 +18,7 @@ import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import './updateProduct.css';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const UpdateProduct = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("/api/categories");
+        const { data } = await axios.get(`${API_URL}api/categories`);
         setAllCategories(data.categories);
       } catch (error) {
         console.error("Error fetching categories", error);

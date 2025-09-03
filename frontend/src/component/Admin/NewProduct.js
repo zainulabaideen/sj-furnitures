@@ -14,6 +14,7 @@ import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const NewProduct = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const NewProduct = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("/api/categories");
+        const { data } = await axios.get(`${API_URL}api/categories`);
         setAllCategories(data.categories);
       } catch (error) {
         console.error("Error fetching categories", error);

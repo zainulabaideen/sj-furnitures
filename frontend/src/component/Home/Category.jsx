@@ -11,6 +11,7 @@ import img2 from "../../assets/p2_img.jpg";
 import img3 from "../../assets/p3_img.jpg";
 import img4 from "../../assets/p4_img.jpg";
 import img5 from "../../assets/p4_img.jpg";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function Category() {
   const [categories, setCategories] = useState([]);
@@ -29,7 +30,7 @@ export default function Category() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("/api/categories");
+        const { data } = await axios.get(`${API_URL}api/categories`);
         const formattedCategories = Array.isArray(data.categories)
           ? data.categories.map((cat, index) => ({
               name: cat,

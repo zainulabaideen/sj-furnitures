@@ -41,7 +41,7 @@ const Header = () => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.get(`${API_URL}/api/categories`);
+      const { data } = await axios.get(`${API_URL}api/categories`);
       setCategories(data.categories);
     } catch (err) {
       console.error("Error fetching categories", err);
