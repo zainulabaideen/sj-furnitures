@@ -47,7 +47,7 @@ const Products = ({ currentPage }) => {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {products &&
-              products.map((product) => {
+              products?.map((product) => {
                 const description = product.description || "";
                 const maxLength = 100;
                 const isLong = description.length > maxLength;

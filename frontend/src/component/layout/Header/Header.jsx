@@ -85,11 +85,11 @@ const Header = () => {
   return (
     <>
       <div
-        className={`top-0 z-50 w-full fixed transition-all duration-300 bg-white overflow-x-hidden ${
+        className={`top-0 z-50 w-full fixed transition-all duration-300 bg-white overflow-hidden ${
           shadow  ? "shadow-lg" : "shadow-none"
         }`}
       >
-        <nav className="h-18 py-2 px-3 md:px-20 flex items-center justify-between text-gray-800">
+        <nav className="h-18 py-2 px-3 md:px-20 flex overflow-hidden items-center justify-between text-gray-800">
           {/* Mobile Menu Icon */}
           <div className="lg:hidden flex flex-col items-start justify-center self-center h-6 space-y-1 cursor-pointer text-3xl">
             {show ? (

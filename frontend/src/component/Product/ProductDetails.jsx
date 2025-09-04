@@ -1,7 +1,7 @@
 
 const ProductDetails = ({ product }) => {
   return (
-    <div>  
+    <div className="relative ">  
       <h3 className="text-xl font-semibold mb-2 text-primary">Product Details</h3>
       <p className="text-gray-700 leading-relaxed">{product.description || "No description available."}</p>
 

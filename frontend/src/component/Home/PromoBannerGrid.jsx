@@ -20,7 +20,7 @@ const promos = [
 
 export default function PromoBannerGrid() {
   return (
-    <div className="w-full my-10 px-4 md:px-20 overflow-x-hidden">
+    <div className="w-full my-10 px-4 md:px-20 overflow-hidden">
       <div
         className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 
                    gap-4 md:gap-6 h-auto md:h-[600px] w-full"

@@ -50,7 +50,7 @@ export default function Category() {
   return (
     <div
       data-aos="fade-up"
-      className="w-full md:px-20 px-4 z-0 flex flex-col items-center mb-20"
+      className="w-full md:px-20 px-4 z-0 flex flex-col items-center mb-20 overflow-hidden"
     >
       {/* Section Heading */}
       <div className="text-center pb-10 pt-5">

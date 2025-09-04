@@ -66,14 +66,15 @@ const DisplayProduct = () => {
 
   return (
     <main className="mt-20 pt-10 md:px-20 px-3">
-      <article className="flex md:flex-row flex-col md:items-start items-center justify-between h-auto md:h-[60vh] space-y-5">
+       <div className="space-y-12">
+      <article className="flex md:flex-row relative flex-col md:items-start items-center justify-between space-y-5">
         {/* Product Image Gallery */}
         <figure
           data-aos="fade-right"
           className="basis-[43%] flex gap-4 items-center justify-center"
         >
           {/* Thumbnail List */}
-          {product.images?.length > 1 && (
+          {product?.images?.length > 1 && (
             <div className="flex flex-col gap-3 w-20 overflow-y-auto">
               {product.images.map((image, idx) => (
                 <img
@@ -110,7 +111,7 @@ const DisplayProduct = () => {
         {/* Product Info */}
         <section
           data-aos="fade-left"
-          className="basis-[48%] space-y-6 bg-white rounded-2xl p-6 shadow-md"
+          className="basis-[48%] space-y-6  bg-white rounded-2xl p-6 shadow-md"
         >
           <header className="flex gap-10 items-center justify-between">
             <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
@@ -182,8 +183,8 @@ const DisplayProduct = () => {
       {/* Tabs Section */}
       <nav
         data-aos="fade-up"
-        className="flex w-full items-center justify-center gap-4 mt-20 border-b"
-        aria-label="Product details and reviews"
+         className="flex w-full items-center justify-center gap-4 mt-12 border-b clear-both"
+    aria-label="Product details and reviews"
       >
         <button
           onClick={() => setActiveTab("details")}
@@ -206,7 +207,7 @@ const DisplayProduct = () => {
           Rating & Reviews
         </button>
       </nav>
-
+</div>
       {/* Tab Content */}
       <section data-aos="fade-up" className="mt-6" ref={detailsRef}>
         {activeTab === "details" ? (
