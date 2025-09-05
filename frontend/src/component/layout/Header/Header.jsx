@@ -85,7 +85,7 @@ const Header = () => {
   return (
     <>
       <div
-        className={`top-0 z-50 w-full fixed transition-all duration-300 bg-white overflow-hidden ${
+        className={`top-0 z-50 w-full fixed transition-all duration-300 bg-white ${
           shadow  ? "shadow-lg" : "shadow-none"
         }`}
       >
@@ -135,7 +135,7 @@ const Header = () => {
         <Loader />
       </li>
     ) : error ? (
-      <li className="px-4 py-2 text-red-500">
+      <li className="px-4 pt-3 pb-5 text-red-500">
         {error}{" "}
         <button
           onClick={() => fetchCategories()}

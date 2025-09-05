@@ -112,7 +112,7 @@ const RatingReviews = ({ product }) => {
         )}
 
         {Array.isArray(reviews) &&
-          reviews.map((rev) => (
+          reviews?.map((rev) => (
             <div key={rev._id || rev.user} className="border-b py-4 flex gap-3">
               <div className="flex-1">
                 <ReactStars

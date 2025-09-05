@@ -76,7 +76,7 @@ const DisplayProduct = () => {
           {/* Thumbnail List */}
           {product?.images?.length > 1 && (
             <div className="flex flex-col gap-3 w-20 overflow-y-auto">
-              {product.images.map((image, idx) => (
+              {product?.images?.map((image, idx) => (
                 <img
                   key={image._id || idx}
                   src={image.url || img}
@@ -114,11 +114,11 @@ const DisplayProduct = () => {
           className="basis-[48%] space-y-6  bg-white rounded-2xl p-6 shadow-md"
         >
           <header className="flex gap-10 items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{product?.name}</h1>
             <ReactStars
               count={5}
               size={24}
-              value={product.ratings}
+              value={product?.ratings}
               edit={false}
               char="★"
               color="#e5e7eb"
@@ -132,9 +132,9 @@ const DisplayProduct = () => {
 
           {/* Short Description ONLY */}
           <p className="text-gray-700 leading-relaxed text-sm">
-            {product.description?.slice(0, 120)}...
+            {product?.description?.slice(0, 120)}...
           </p>
-          {product.description?.length > 120 && (
+          {product?.description?.length > 120 && (
             <button
               onClick={handleReadMore}
               className="text-yellow-600 text-sm hover:underline font-medium"

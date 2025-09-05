@@ -27,7 +27,7 @@ const ProductCard = ({ products }) => {
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 text-primaryTextClr items-stretch">
         {filtered?.length > 0 ? (
-          filtered.map((item) => {
+          filtered?.map((item) => {
             const description = item.description || "";
             const maxLength = 100;
             const isLong = description?.length > maxLength;
