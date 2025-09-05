@@ -104,10 +104,10 @@ const RatingReviews = ({ product }) => {
       {/* List Reviews */}
       <div>
         <h3 className="text-xl font-semibold text-gray-800 mb-5">
-          Customer Reviews ({reviews.length})
+          Customer Reviews ({reviews?.length})
         </h3>
 
-        {reviews.length === 0 && (
+        {reviews?.length === 0 && (
           <p className="text-gray-600">No reviews yet.</p>
         )}
 

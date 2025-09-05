@@ -89,7 +89,8 @@ const Header = () => {
           shadow  ? "shadow-lg" : "shadow-none"
         }`}
       >
-        <nav className="h-18 py-2 px-3 md:px-20 flex overflow-hidden items-center justify-between text-gray-800">
+      <nav className="h-18 py-2 px-3 md:px-20 flex items-center justify-between text-gray-800 relative z-50">
+
           {/* Mobile Menu Icon */}
           <div className="lg:hidden flex flex-col items-start justify-center self-center h-6 space-y-1 cursor-pointer text-3xl">
             {show ? (
@@ -125,45 +126,40 @@ const Header = () => {
             ))}
 
             {/* 🔹 Categories Dropdown */}
-            <li
-              className="relative cursor-pointer font-semibold py-2"
-              onMouseEnter={() => setShowCategories(true)}
-              onMouseLeave={() => setShowCategories(false)}
-            >
-              <span className="hover:text-secondary">Categories</span>
+         <li className="relative cursor-pointer font-semibold py-2 group">
+  <span className="hover:text-secondary">Categories</span>
 
-              {showCategories && (
-                <ul className="absolute left-0 top-full mt-0 w-48 bg-white shadow-md rounded-md z-50">
-                  {loading ? (
-                    <li className="px-4 py-2">
-                      <Loader />
-                    </li>
-                  ) : error ? (
-                    <li className="px-4 py-2 text-red-500">
-                      {error}{" "}
-                      <button
-                        onClick={() => fetchCategories()}
-                        className="text-blue-600 underline ml-2"
-                      >
-                        Retry
-                      </button>
-                    </li>
-                  ) : categories.length > 0 ? (
-                    categories.map((cat, index) => (
-                      <li
-                        key={index}
-                        onClick={() => navigate(`/category/${cat}`)}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                      >
-                        {cat}
-                      </li>
-                    ))
-                  ) : (
-                    <li className="px-4 py-2 text-gray-500">No categories</li>
-                  )}
-                </ul>
-              )}
-            </li>
+  <ul className="absolute left-0   -bottom-40 -mt-1 w-48 bg-white shadow-md rounded-md  hidden group-hover:block">
+    {loading ? (
+      <li className="px-4 py-2">
+        <Loader />
+      </li>
+    ) : error ? (
+      <li className="px-4 py-2 text-red-500">
+        {error}{" "}
+        <button
+          onClick={() => fetchCategories()}
+          className="text-blue-600 underline ml-2"
+        >
+          Retry
+        </button>
+      </li>
+    ) : categories.length > 0 ? (
+      categories.map((cat, index) => (
+        <li
+          key={index}
+          onClick={() => navigate(`/category/${cat}`)}
+          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        >
+          {cat}
+        </li>
+      ))
+    ) : (
+      <li className="px-4 py-2 text-gray-500">No categories</li>
+    )}
+  </ul>
+</li>
+
           </ul>
 
           {/* Navbar Icons */}

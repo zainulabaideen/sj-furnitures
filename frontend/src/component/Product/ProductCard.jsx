@@ -12,7 +12,7 @@ const ProductCard = ({ products }) => {
   // 🔹 Helper for short description
   const getPreviewText = (text, maxLength = 100) => {
     if (!text) return "No description available.";
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+    return text?.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
   return (
@@ -26,11 +26,11 @@ const ProductCard = ({ products }) => {
       </h2>
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 text-primaryTextClr items-stretch">
-        {filtered.length > 0 ? (
+        {filtered?.length > 0 ? (
           filtered.map((item) => {
             const description = item.description || "";
             const maxLength = 100;
-            const isLong = description.length > maxLength;
+            const isLong = description?.length > maxLength;
             const previewText = getPreviewText(description, maxLength);
 
             return (
@@ -47,8 +47,8 @@ const ProductCard = ({ products }) => {
                   <figure className="overflow-hidden">
                     <img
                       src={
-                        item.images && item.images.length > 0
-                          ? item.images[0].url
+                        item?.images && item?.images?.length > 0
+                          ? item?.images[0].url
                           : "/default-product-image.png"
                       }
                       alt={item.name}
@@ -64,11 +64,11 @@ const ProductCard = ({ products }) => {
                   <div className="p-4 space-y-2">
                     {/* 🔹 Title & Stars */}
                     <header className="flex items-center justify-between">
-                      <h2 className="text-lg font-medium">{item.name}</h2>
+                      <h2 className="text-lg font-medium">{item?.name}</h2>
                       <ReactStars
                         count={5}
                         size={20}
-                        value={item.ratings || item.ratingValue || 5}
+                        value={item?.ratings || item?.ratingValue || 5}
                         edit={false}
                         char="★"
                         color="#e5e7eb"
@@ -95,11 +95,11 @@ const ProductCard = ({ products }) => {
                     {/* 🔹 Price */}
                     <footer className="flex gap-4 items-center">
                       <span className="font-bold text-gray-600">
-                        ${item.price || item.new_price}
+                        ${item?.price || item?.new_price}
                       </span>
-                      {(item.oldPrice || item.old_price) && (
+                      {(item?.oldPrice || item?.old_price) && (
                         <span className="line-through text-gray-400">
-                          ${item.oldPrice || item.old_price}
+                          ${item?.oldPrice || item?.old_price}
                         </span>
                       )}
                     </footer>

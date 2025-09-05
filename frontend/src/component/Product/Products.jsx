@@ -50,7 +50,7 @@ const Products = ({ currentPage }) => {
               products?.map((product) => {
                 const description = product.description || "";
                 const maxLength = 100;
-                const isLong = description.length > maxLength;
+                const isLong = description?.length > maxLength;
                 const previewText = getPreviewText(description, maxLength);
 
                 return (
@@ -64,8 +64,8 @@ const Products = ({ currentPage }) => {
                       <figure className="overflow-hidden relative">
                         <img
                           src={
-                            product.images && product.images.length > 0
-                              ? product.images[0].url
+                            product?.images && product?.images?.length > 0
+                              ? product?.images[0].url
                               : img
                           }
                           alt={product.name || "Product"}
@@ -115,11 +115,11 @@ const Products = ({ currentPage }) => {
                         {/* Price Section */}
                         <footer className="flex gap-4 items-center pt-3">
                           <span className="text-xl font-bold text-gray-900">
-                            {formatPrice(product.price)}
+                            {formatPrice(product?.price)}
                           </span>
-                          {product.oldPrice && (
+                          {product?.oldPrice && (
                             <span className="line-through text-gray-400 text-sm">
-                              {formatPrice(product.oldPrice)}
+                              {formatPrice(product?.oldPrice)}
                             </span>
                           )}
                         </footer>

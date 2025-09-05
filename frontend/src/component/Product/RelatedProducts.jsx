@@ -9,14 +9,14 @@ const RelatedProducts = ({ category, currentProductId }) => {
   // 🔹 Helper function to truncate description
   const getPreviewText = (text, maxLength = 100) => {
     if (!text) return "No description available.";
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+    return text?.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
   useEffect(() => {
     const fetchRelated = async () => {
       try {
         const { data } = await axios.get(`/api/product/${currentProductId}/related`);
-        setRelated(data.products);
+        setRelated(data?.products);
       } catch (error) {
         console.error("Failed to load related products", error);
       }
@@ -24,7 +24,7 @@ const RelatedProducts = ({ category, currentProductId }) => {
     fetchRelated();
   }, [category, currentProductId]);
 
-  if (related.length === 0) return null;
+  if (related?.length === 0) return null;
 
   return (
     <section className="mt-20">
@@ -35,7 +35,7 @@ const RelatedProducts = ({ category, currentProductId }) => {
         {related.map((product) => {
           const description = product.description || "";
           const maxLength = 100; // 🔹 Adjust description preview length
-          const isLong = description.length > maxLength;
+          const isLong = description?.length > maxLength;
           const previewText = getPreviewText(description, maxLength);
 
           return (
@@ -47,8 +47,8 @@ const RelatedProducts = ({ category, currentProductId }) => {
                 <figure className="overflow-hidden">
                   <img
                     src={
-                      product.images && product.images.length > 0
-                        ? product.images[0].url
+                      product?.images && product?.images?.length > 0
+                        ? product?.images[0].url
                         : "/default-product-image.png"
                     }
                     alt={product.name}
@@ -63,11 +63,11 @@ const RelatedProducts = ({ category, currentProductId }) => {
 
                 <div className="p-4 space-y-2">
                   <header className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold">{product.name}</h3>
+                    <h3 className="text-lg font-semibold">{product?.name}</h3>
                     <ReactStars
                       count={5}
                       size={20}
-                      value={product.ratings || 5}
+                      value={product?.ratings || 5}
                       edit={false}
                       char="★"
                       color="#e5e7eb"
@@ -90,7 +90,7 @@ const RelatedProducts = ({ category, currentProductId }) => {
 
                   <footer className="flex gap-4 items-center">
                     <span className="font-bold text-gray-600">
-                      PKR {product.price}
+                      PKR {product?.price}
                     </span>
                   </footer>
                 </div>
