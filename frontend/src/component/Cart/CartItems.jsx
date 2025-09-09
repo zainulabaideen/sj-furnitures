@@ -58,10 +58,10 @@ const CartItems = () => {
   if (isCartEmpty) {
     return (
       <div className="mt-28 min-h-[40vh] flex flex-col justify-center items-center text-center space-y-5">
-        <h2 className="text-3xl font-semibold text-gray-700">
+        <h2 className="text-3xl font-semibold text-gray-900">
           Your cart is empty 🛒
         </h2>
-        <p className="text-gray-500 text-lg">
+        <p className="text-gray-700 text-lg">
           Looks like you haven’t added anything yet.
         </p>
         <Link to="/products">
@@ -134,7 +134,7 @@ const CartItems = () => {
                       onClick={() =>
                         updateQuantity(item.product, item.quantity + 1, item.stock, item.name)
                       }
-                      className="px-3 py-1 disabled:opacity-50 hover:text-gray-800"
+                      className="px-3 py-1 disabled:opacity-50 hover:text-black text-gray-800"
                     >
                       +
                     </button>
@@ -146,7 +146,7 @@ const CartItems = () => {
                 <td className="p-4">
                   <IoClose
                     onClick={() => handleRemove(item.product)}
-                    className="w-7 h-7 text-secondary hover:bg-secondary/20 cursor-pointer p-1 rounded-full"
+                    className="w-7 h-7 text-secondary bg-secondary/20 cursor-pointer p-1 rounded-full"
                   />
                 </td>
               </tr>
